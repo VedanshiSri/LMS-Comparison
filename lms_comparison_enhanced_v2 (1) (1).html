@@ -1,0 +1,2125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LMS Feature Comparison – IndiaMART L&D</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0f17;
+    --card: #161824;
+    --border: #252840;
+    --accent1: #6c63ff;
+    --accent2: #ff6584;
+    --accent3: #43e97b;
+    --accent4: #f7971e;
+    --text: #e8eaf6;
+    --muted: #8890b0;
+    --full: #43e97b;
+    --partial: #f7971e;
+    --none: #ff5370;
+    --yes: #43e97b;
+    --no: #ff5370;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; line-height: 1.6; }
+
+  /* HEADER */
+  .hero {
+    background: linear-gradient(135deg, #12142b 0%, #1a1040 50%, #0e1a2e 100%);
+    padding: 48px 40px 40px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(108,99,255,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag { display: inline-block; background: rgba(108,99,255,0.15); border: 1px solid rgba(108,99,255,0.4); color: var(--accent1); font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 16px; }
+  .hero h1 { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; line-height: 1.2; }
+  .hero h1 span { color: var(--accent1); }
+  .hero p { color: var(--muted); margin-top: 10px; max-width: 680px; font-size: 14px; }
+
+  /* NAV TABS */
+  .nav-tabs { display: flex; gap: 4px; padding: 20px 40px 0; background: var(--bg); border-bottom: 1px solid var(--border); overflow-x: auto; }
+  .nav-tab { padding: 10px 20px; border-radius: 8px 8px 0 0; cursor: pointer; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600; white-space: nowrap; color: var(--muted); border: 1px solid transparent; border-bottom: none; transition: all 0.2s; }
+  .nav-tab:hover { color: var(--text); background: var(--card); }
+  .nav-tab.active { color: var(--accent1); background: var(--card); border-color: var(--border); border-bottom: 1px solid var(--card); position: relative; top: 1px; }
+
+  /* CONTENT */
+  .content { padding: 32px 40px; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* LEGEND */
+  .legend { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 28px; align-items: center; }
+  .legend-title { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-right: 8px; }
+  .leg-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+  .leg-badge { width: 22px; height: 22px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
+  .leg-full { background: rgba(67,233,123,0.15); color: var(--full); border: 1px solid rgba(67,233,123,0.3); }
+  .leg-partial { background: rgba(247,151,30,0.15); color: var(--partial); border: 1px solid rgba(247,151,30,0.3); }
+  .leg-none { background: rgba(255,83,112,0.15); color: var(--none); border: 1px solid rgba(255,83,112,0.3); }
+
+  /* TABLE WRAPPER */
+  .table-scroll { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; min-width: 1200px; }
+  thead tr { background: #1b1e35; }
+  thead th { padding: 14px 12px; text-align: center; font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  thead th:first-child { text-align: left; min-width: 220px; padding-left: 20px; }
+  thead th.platform { color: var(--text); font-size: 10px; max-width: 90px; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  tbody tr:last-child { border-bottom: none; }
+  .feature-cat { background: #1a1c30 !important; }
+  .feature-cat td { padding: 8px 20px; font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--accent1); }
+  tbody td { padding: 12px 8px; text-align: center; vertical-align: middle; }
+  tbody td:first-child { text-align: left; padding-left: 20px; font-size: 13px; color: var(--text); min-width: 220px; }
+  .feat-name { font-weight: 500; }
+  .feat-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* BADGES */
+  .badge { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 6px; font-weight: 700; font-size: 13px; }
+  .b-full { background: rgba(67,233,123,0.12); color: var(--full); border: 1px solid rgba(67,233,123,0.25); }
+  .b-partial { background: rgba(247,151,30,0.12); color: var(--partial); border: 1px solid rgba(247,151,30,0.25); }
+  .b-none { background: rgba(255,83,112,0.12); color: var(--none); border: 1px solid rgba(255,83,112,0.25); }
+
+  /* SCORE ROW */
+  .score-row td { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; background: #1b1e35; }
+  .score-chip { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+  .s-high { background: rgba(67,233,123,0.15); color: var(--full); }
+  .s-mid { background: rgba(247,151,30,0.15); color: var(--partial); }
+  .s-low { background: rgba(255,83,112,0.15); color: var(--none); }
+
+  /* EXPLANATION CARDS */
+  .section-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+  .section-sub { color: var(--muted); font-size: 13px; margin-bottom: 28px; }
+  .exp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 20px; }
+  .exp-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 22px; transition: border-color 0.2s; }
+  .exp-card:hover { border-color: rgba(108,99,255,0.35); }
+  .exp-card-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+  .exp-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .exp-card-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; }
+  .exp-card-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .exp-body { font-size: 13px; color: var(--muted); line-height: 1.7; }
+  .exp-body strong { color: var(--text); }
+
+  /* PLATFORM RATINGS */
+  .platform-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .p-pill { display: flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  .p-full { background: rgba(67,233,123,0.1); color: var(--full); border: 1px solid rgba(67,233,123,0.2); }
+  .p-partial { background: rgba(247,151,30,0.1); color: var(--partial); border: 1px solid rgba(247,151,30,0.2); }
+  .p-none { background: rgba(255,83,112,0.1); color: var(--none); border: 1px solid rgba(255,83,112,0.2); }
+
+  /* JOURNEY CARDS */
+  .journey-section { margin-bottom: 44px; }
+  .journey-section h3 { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .journey-section .journey-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+  .journey-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+  .journey-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; border-left: 3px solid var(--accent1); }
+  .journey-card.sales { border-left-color: #ff6584; }
+  .journey-card.tech { border-left-color: #6c63ff; }
+  .journey-card.corp { border-left-color: #43e97b; }
+  .journey-card.product { border-left-color: #f7971e; }
+  .journey-card h4 { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+  .journey-card .training-type { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; background: rgba(108,99,255,0.15); color: var(--accent1); margin-bottom: 10px; }
+  .journey-card.sales .training-type { background: rgba(255,101,132,0.15); color: #ff6584; }
+  .journey-card.tech .training-type { background: rgba(108,99,255,0.15); color: #6c63ff; }
+  .journey-card.corp .training-type { background: rgba(67,233,123,0.15); color: #43e97b; }
+  .journey-card.product .training-type { background: rgba(247,151,30,0.15); color: #f7971e; }
+  .journey-card p { font-size: 12.5px; color: var(--muted); line-height: 1.7; }
+  .journey-card p strong { color: var(--text); }
+  .lms-rec { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+  .lms-rec-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .lms-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .lms-tag { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 10px; }
+  .lms-best { background: rgba(67,233,123,0.12); color: var(--full); border: 1px solid rgba(67,233,123,0.2); }
+  .lms-ok { background: rgba(247,151,30,0.12); color: var(--partial); border: 1px solid rgba(247,151,30,0.2); }
+
+  /* COMPARISON SECTION */
+  .verdict-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-top: 16px; }
+  .verdict-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .verdict-card h4 { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .verdict-score { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 12px; }
+  .score-bar { height: 6px; border-radius: 3px; background: var(--border); width: 120px; overflow: hidden; }
+  .score-fill { height: 100%; border-radius: 3px; }
+  .verdict-pros { margin-bottom: 8px; }
+  .verdict-pros strong, .verdict-cons strong { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); }
+  .verdict-pros ul, .verdict-cons ul { list-style: none; margin-top: 4px; }
+  .verdict-pros li::before { content: '✓ '; color: var(--full); font-weight: 700; }
+  .verdict-cons li::before { content: '✗ '; color: var(--none); font-weight: 700; }
+  .verdict-pros li, .verdict-cons li { font-size: 12px; color: var(--muted); line-height: 1.8; }
+  .verdict-tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 3px 10px; border-radius: 10px; margin-top: 8px; }
+
+  @media (max-width: 768px) {
+    .hero, .content { padding: 24px 20px; }
+    .nav-tabs { padding: 16px 20px 0; }
+    .exp-grid, .journey-grid, .verdict-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-tag">IndiaMART L&D · LMS Evaluation 2025</div>
+  <h1>LMS <span>Feature Comparison</span><br>& Training Journey Application</h1>
+  <p>Evaluating 10 LMS/LXP platforms against 16 critical features for IndiaMART's Training & Development programme — with examples mapped to actual employee journeys.</p>
+</div>
+
+<div class="nav-tabs">
+  <div class="nav-tab active" onclick="showSection('checklist')">① Checklist Table</div>
+  <div class="nav-tab" onclick="showSection('explanations')">② Feature Explanations</div>
+  <div class="nav-tab" onclick="showSection('journeys')">③ Journey Applications</div>
+  <div class="nav-tab" onclick="showSection('verdict')">④ Platform Verdict</div>
+  <div class="nav-tab" onclick="showSection('ai-native')">⑤ AI-Native Platforms</div>
+  <div class="nav-tab" onclick="showSection('cypher-disprz')">⑥ CYPHER &amp; Disprz Deep Dive</div>
+  <div class="nav-tab" onclick="showSection('competitors')">⑦ IndiaMART Competitors</div>
+</div>
+
+<!-- ============================================================ SECTION 1: CHECKLIST -->
+<div class="content">
+<div id="checklist" class="section active">
+  <div class="legend">
+    <span class="legend-title">Legend:</span>
+    <span class="leg-item"><span class="leg-badge leg-full">✓</span> Fully Supported</span>
+    <span class="leg-item"><span class="leg-badge leg-partial">~</span> Partially Supported</span>
+    <span class="leg-item"><span class="leg-badge leg-none">✗</span> Not Supported / Very Limited</span>
+  </div>
+
+  <div class="table-scroll">
+  <table>
+    <thead>
+      <tr>
+        <th style="text-align:left">Feature Required</th>
+        <th class="platform">Workday<br>Learning<br>(Sana)</th>
+        <th class="platform">SAP<br>Litmos</th>
+        <th class="platform">Docebo</th>
+        <th class="platform">Cornerstone<br>OnDemand</th>
+        <th class="platform">Absorb<br>LMS</th>
+        <th class="platform">SAP<br>SuccessFactors<br>Learning</th>
+        <th class="platform">Cornerstone<br>LXP</th>
+        <th class="platform">TalentLMS</th>
+        <th class="platform">Disprz</th>
+        <th class="platform">Learnyst /<br>Graphy</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- CAT 1 -->
+      <tr class="feature-cat"><td colspan="11">1 · Content & Tracking</td></tr>
+      <tr>
+        <td><div class="feat-name">xAPI over SCORM tracking</div><div class="feat-desc">Detailed step-by-step behaviour capture</div></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-none">✗</span></td>
+      </tr>
+      <tr>
+        <td><div class="feat-name">Offline sync (works offline, syncs later)</div><div class="feat-desc">Mobile offline + data sync on reconnect</div></td>
+        <td><span class="badge b-none">✗</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-none">✗</span></td>
+      </tr>
+      <tr>
+        <td><div class="feat-name">Detailed assessment behaviour tracking</div><div class="feat-desc">Which question answered incorrectly, aggregate errors</div></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+      </tr>
+
+      <!-- CAT 2 -->
+      <tr class="feature-cat"><td colspan="11">2 · Content Management</td></tr>
+      <tr>
+        <td><div class="feat-name">Multi-format upload (video, PPT, PDF, links)</div><div class="feat-desc">Including offline session recordings</div></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+      </tr>
+      <tr>
+        <td><div class="feat-name">Video hosting integration (Vimeo/Wistia + % API)</div><div class="feat-desc">Percentage-complete via external video APIs</div></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-none">✗</span></td>
+      </tr>
+
+      <!-- CAT 3 -->
+      <tr class="feature-cat"><td colspan="11">3 · Administration & Authoring</td></tr>
+      <tr>
+        <td><div class="feat-name">Rich WYSIWYG course editor + version control</div><div class="feat-desc">Clone modules, templates, admin edits</div></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+      </tr>
+
+      <!-- CAT 4 -->
+      <tr class="feature-cat"><td colspan="11">4 · Progress Tracking</td></tr>
+      <tr>
+        <td><div class="feat-name">Real-time learner progress + manager dashboards</div><div class="feat-desc">% complete, time spent, completion deadlines</div></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+      </tr>
+
+      <!-- CAT 5 -->
+      <tr class="feature-cat"><td colspan="11">5 · Personalised Learning Paths</td></tr>
+      <tr>
+        <td><div class="feat-name">Role/level/dept auto-assignment (rules or AI)</div><div class="feat-desc">e.g. "Sales L3+" sees specific courses only</div></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-none">✗</span></td>
+      </tr>
+      <tr>
+        <td><div class="feat-name">Personal employee dashboard (own data only)</div><div class="feat-desc">Individual learner view, private progress</div></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+      </tr>
+
+      <!-- CAT 6 -->
+      <tr class="feature-cat"><td colspan="11">6 · Assessment & Quizzing</td></tr>
+      <tr>
+        <td><div class="feat-name">Built-in quiz engine + LTI integrations (Kahoot)</div><div class="feat-desc">Grade pass-back, survey tools</div></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+      </tr>
+      <tr>
+        <td><div class="feat-name">AI quiz/question generator</div><div class="feat-desc">Auto-generate questions from content</div></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-none">✗</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-none">✗</span></td>
+      </tr>
+
+      <!-- CAT 7 -->
+      <tr class="feature-cat"><td colspan="11">7 · Notifications & Scheduling</td></tr>
+      <tr>
+        <td><div class="feat-name">Automated alerts & LMS calendar</div><div class="feat-desc">Due dates, upcoming sessions, reminders</div></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+      </tr>
+
+      <!-- CAT 8 -->
+      <tr class="feature-cat"><td colspan="11">8 · AI-Enabled Tools</td></tr>
+      <tr>
+        <td><div class="feat-name">AI search, recommendations, content auto-tagging</div><div class="feat-desc">Course outline generators, adaptive tutors</div></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-none">✗</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-none">✗</span></td>
+      </tr>
+
+      <!-- CAT 9 -->
+      <tr class="feature-cat"><td colspan="11">9 · Role-Based Access & Compliance</td></tr>
+      <tr>
+        <td><div class="feat-name">Dept/location/level segmented access + certifications</div><div class="feat-desc">Audit trails, compliance tracking</div></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+      </tr>
+
+      <!-- CAT 10 -->
+      <tr class="feature-cat"><td colspan="11">10 · Security & Data Privacy</td></tr>
+      <tr>
+        <td><div class="feat-name">GDPR/ISO compliance, data encryption, uptime SLA</div><div class="feat-desc">Enterprise-grade security</div></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-none">✗</span></td>
+      </tr>
+
+      <!-- CAT 11 -->
+      <tr class="feature-cat"><td colspan="11">11 · Reporting & Analytics</td></tr>
+      <tr>
+        <td><div class="feat-name">Custom report builder + API export + scheduled reports</div><div class="feat-desc">Multi-dimensional filtering, dashboards</div></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-none">✗</span></td>
+      </tr>
+
+      <!-- CAT 12 -->
+      <tr class="feature-cat"><td colspan="11">12 · User Experience</td></tr>
+      <tr>
+        <td><div class="feat-name">Intuitive UI/UX, easy course access & enrolment</div><div class="feat-desc">Mobile-friendly learner interface</div></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+      </tr>
+
+      <!-- CAT 13 -->
+      <tr class="feature-cat"><td colspan="11">13 · Scalability & Performance</td></tr>
+      <tr>
+        <td><div class="feat-name">1000+ concurrent users, multi-lingual (Hindi/English)</div><div class="feat-desc">No slowdown at scale</div></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-none">✗</span></td>
+      </tr>
+
+      <!-- CAT 14 -->
+      <tr class="feature-cat"><td colspan="11">14 · Social & Gamification</td></tr>
+      <tr>
+        <td><div class="feat-name">Forums, peer learning, leaderboards, badges</div><div class="feat-desc">Gamification to boost engagement</div></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+      </tr>
+
+      <!-- CAT 15 -->
+      <tr class="feature-cat"><td colspan="11">15 · Attendance Tracking</td></tr>
+      <tr>
+        <td><div class="feat-name">QR Code, Geolocation, Badge scan attendance</div><div class="feat-desc">For offline & online sessions on LMS</div></td>
+        <td><span class="badge b-none">✗</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-none">✗</span></td>
+      </tr>
+
+      <!-- CAT 16 -->
+      <tr class="feature-cat"><td colspan="11">16 · Localisation</td></tr>
+      <tr>
+        <td><div class="feat-name">Hindi + English interface & content support</div><div class="feat-desc">Multi-language UI and content delivery</div></td>
+        <td><span class="badge b-partial">~</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-full">✓</span></td>
+        <td><span class="badge b-partial">~</span></td>
+      </tr>
+
+      <!-- SCORE ROW -->
+      <tr class="score-row">
+        <td style="font-size:12px;color:var(--muted);padding-left:20px;">Overall Fit Score (out of 16)</td>
+        <td><span class="score-chip s-mid">11/16</span></td>
+        <td><span class="score-chip s-mid">11/16</span></td>
+        <td><span class="score-chip s-high">14/16</span></td>
+        <td><span class="score-chip s-high">13/16</span></td>
+        <td><span class="score-chip s-mid">12/16</span></td>
+        <td><span class="score-chip s-mid">12/16</span></td>
+        <td><span class="score-chip s-high">13/16</span></td>
+        <td><span class="score-chip s-mid">10/16</span></td>
+        <td><span class="score-chip s-high">15/16</span></td>
+        <td><span class="score-chip s-low">4/16</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="font-size:12px;color:var(--muted);margin-top:16px;">* Learnyst and Graphy are designed primarily for course creators / ed-tech, not enterprise L&D — not recommended for IndiaMART's requirements. Scores reflect capability as documented; partial scores indicate feature exists but requires add-ons, configuration, or third-party integration.</p>
+</div>
+
+<!-- ============================================================ SECTION 2: EXPLANATIONS -->
+<div id="explanations" class="section">
+  <div class="section-title">Feature-by-Feature Explanation — All 16 Features</div>
+  <div class="section-sub">Detailed breakdown of every feature requirement with platform-level capability ratings and real IndiaMART T&D journey context. Features marked with a star (★) are the ones most critical to IndiaMART's unique training architecture.</div>
+
+  <!-- CATEGORY LABEL -->
+  <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent1);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);">Category 1 · Content & Tracking</div>
+  <div class="exp-grid" style="margin-bottom:32px;">
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(108,99,255,0.15)">📡</div>
+        <div><div class="exp-card-title">Feature 1 · xAPI over SCORM Tracking ★</div><div class="exp-card-sub">Detailed step-by-step behaviour capture</div></div>
+      </div>
+      <div class="exp-body">xAPI (Experience API) logs granular learning statements like <strong>"Rohan answered Q3 of the Lead Management quiz incorrectly"</strong> or <strong>"OJT module paused at 4:32 min"</strong>, unlike SCORM which only records a binary pass/fail. This is critical for IndiaMART's NSD field sales OJT (30 days) where reps shadow buddies across multiple modules — xAPI captures every interaction step, not just whether a course was "completed."<br><br>
+      <strong>Why partial platforms fall short:</strong> <em>Workday/Sana</em> is architected around its own AI tracking model rather than xAPI, so granular xAPI statements for external SCORM packages are inconsistently reported — the L&D team wouldn't get the per-module dropout data they need from OJT modules. <em>Learnyst/Graphy</em> have no xAPI support at all, making deep tracking impossible.<br><br>
+      <strong>IndiaMART example:</strong> During the 30-day NSD OJT, an L&D admin notices via xAPI data that 78% of reps in the Pune branch are replaying the "RCA Process" module more than twice. This signals the module needs simplification — actionable insight impossible with SCORM alone.</div>
+      <div class="platform-pills">
+        <span class="p-pill p-full">✓ SAP Litmos</span>
+        <span class="p-pill p-full">✓ Docebo</span>
+        <span class="p-pill p-full">✓ Cornerstone OD</span>
+        <span class="p-pill p-full">✓ Absorb LMS</span>
+        <span class="p-pill p-full">✓ SAP SuccessFactors</span>
+        <span class="p-pill p-full">✓ Cornerstone LXP</span>
+        <span class="p-pill p-full">✓ TalentLMS</span>
+        <span class="p-pill p-full">✓ Disprz</span>
+        <span class="p-pill p-partial">~ Workday/Sana</span>
+        <span class="p-pill p-none">✗ Learnyst/Graphy</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(255,101,132,0.15)">📶</div>
+        <div><div class="exp-card-title">Feature 2 · Offline Sync ★★</div><div class="exp-card-sub">Mobile offline access + data sync on reconnect</div></div>
+      </div>
+      <div class="exp-body">IndiaMART's NSD field sales team is the largest sales vertical, covering Tier 2 and Tier 3 cities across India where mobile internet is unreliable. An LMS must allow reps to pre-download training modules and access them offline during OJT field visits, then auto-sync completion data once connectivity returns.<br><br>
+      <strong>Why most platforms are partial:</strong> <em>Docebo, Cornerstone, Absorb, SAP Litmos, SAP SuccessFactors, Cornerstone LXP, TalentLMS</em> all have mobile apps that can cache some content, but full xAPI sync upon reconnect is not guaranteed — some only mark courses as "completed" without saving granular interaction data. This is a significant gap for OJT tracking.<br><br>
+      <strong>Why Workday/Sana is a hard no:</strong> As of 2026, Workday Learning/Sana operates entirely cloud-native with no offline mode. A field sales rep in a low-connectivity zone in Bihar would be completely unable to access their 30-day OJT content.<br><br>
+      <strong>IndiaMART example:</strong> An NSD L1 rep completes day 12 of their OJT shadowing session in a rural market in Rajasthan with zero connectivity. On Disprz, they access the pre-downloaded "Shadowing Checklist" and "Lead Qualification" modules, mark their activities, and the data syncs to the LMS that evening when they get hotel Wi-Fi — visible to their manager the next morning.</div>
+      <div class="platform-pills">
+        <span class="p-pill p-full">✓ Disprz</span>
+        <span class="p-pill p-partial">~ SAP Litmos</span>
+        <span class="p-pill p-partial">~ Docebo</span>
+        <span class="p-pill p-partial">~ Cornerstone OD</span>
+        <span class="p-pill p-partial">~ Absorb LMS</span>
+        <span class="p-pill p-partial">~ SAP SuccessFactors</span>
+        <span class="p-pill p-partial">~ Cornerstone LXP</span>
+        <span class="p-pill p-partial">~ TalentLMS</span>
+        <span class="p-pill p-none">✗ Workday/Sana</span>
+        <span class="p-pill p-none">✗ Learnyst/Graphy</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(67,233,123,0.15)">🧠</div>
+        <div><div class="exp-card-title">Feature 3 · Detailed Assessment Behaviour Tracking</div><div class="exp-card-sub">Question-level analytics, error aggregation</div></div>
+      </div>
+      <div class="exp-body">Beyond pass/fail scores, IndiaMART's L&D team needs to know <em>which specific questions employees are getting wrong</em>, across which branches, and at what frequency. This powers the Knowledge Ninja Assessment for CSD/KCD teams, and helps identify systemic knowledge gaps after DEAL sessions.<br><br>
+      <strong>Why partial platforms fall short:</strong> <em>Workday/Sana</em> tracks learner performance but its assessment analytics are primarily surfaced through its own AI lens rather than exportable question-level data — the L&D team can see scores but not drill down to "Q4 on WebERP Ticket Handling fails 62% of Bengaluru CSD branch" without custom reporting. <em>Learnyst/Graphy</em> have basic quiz pass/fail only.<br><br>
+      <strong>IndiaMART example:</strong> After a Knowledge Ninja Assessment for the CSD vertical, the platform reveals that "Initial RCA" questions from Extended Shubharambh have a 58% failure rate across three branches. The L&D team triggers a targeted DEAL session specifically for those three branches on the RCA module — without this insight, the problem would be invisible.</div>
+      <div class="platform-pills">
+        <span class="p-pill p-full">✓ SAP Litmos</span>
+        <span class="p-pill p-full">✓ Docebo</span>
+        <span class="p-pill p-full">✓ Cornerstone OD</span>
+        <span class="p-pill p-full">✓ Absorb LMS</span>
+        <span class="p-pill p-full">✓ SAP SuccessFactors</span>
+        <span class="p-pill p-full">✓ Cornerstone LXP</span>
+        <span class="p-pill p-full">✓ TalentLMS</span>
+        <span class="p-pill p-full">✓ Disprz</span>
+        <span class="p-pill p-partial">~ Workday/Sana</span>
+        <span class="p-pill p-partial">~ Learnyst/Graphy</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent1);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);">Category 2 · Content Management</div>
+  <div class="exp-grid" style="margin-bottom:32px;">
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(247,151,30,0.15)">📁</div>
+        <div><div class="exp-card-title">Feature 4 · Multi-format Upload (Video, PPT, PDF, Links)</div><div class="exp-card-sub">Including offline session recordings</div></div>
+      </div>
+      <div class="exp-body">IndiaMART's T&D team produces content in many formats: PPT decks for Shubharambh sessions, PDF guides for FCP and Sales Process, MP4 recordings of TTT meets and WSB meets, and YouTube/external video links for Webinar content. All platforms must support this diverse content library natively.<br><br>
+      <strong>Why Learnyst/Graphy is partial:</strong> These platforms support videos and PDFs for course creators but have limited support for SCORM packages, external link-based modules, or blended content pipelines. They are built for ed-tech instructors, not enterprise L&D teams managing hundreds of mixed-format modules across 6 verticals.<br><br>
+      <strong>IndiaMART example:</strong> The L&D team uploads the recording of a TTT meet held in Noida, the PowerPoint used in that session, and a PDF handout on "Coaching Techniques" — all linked in a single module. WSB meets are recorded, uploaded, and auto-notified to employees who missed the live session.</div>
+      <div class="platform-pills">
+        <span class="p-pill p-full">✓ Workday/Sana</span>
+        <span class="p-pill p-full">✓ SAP Litmos</span>
+        <span class="p-pill p-full">✓ Docebo</span>
+        <span class="p-pill p-full">✓ Cornerstone OD</span>
+        <span class="p-pill p-full">✓ Absorb LMS</span>
+        <span class="p-pill p-full">✓ SAP SuccessFactors</span>
+        <span class="p-pill p-full">✓ Cornerstone LXP</span>
+        <span class="p-pill p-full">✓ TalentLMS</span>
+        <span class="p-pill p-full">✓ Disprz</span>
+        <span class="p-pill p-partial">~ Learnyst/Graphy</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(67,233,123,0.15)">🎬</div>
+        <div><div class="exp-card-title">Feature 5 · Video Hosting Integration (Vimeo/Wistia + % API)</div><div class="exp-card-sub">Percentage-complete tracking via external video APIs</div></div>
+      </div>
+      <div class="exp-body">Uploading a video to the LMS is different from knowing how much of it a learner actually watched. This feature requires the LMS to integrate with external video hosts (Vimeo, Wistia) via their APIs to pull back watch percentage data — so a learner who watched 23% of a 45-minute WSB recording can be marked "incomplete" and nudged to finish.<br><br>
+      <strong>Why most platforms are partial:</strong> <em>Workday/Sana, SAP Litmos, Cornerstone OD, Absorb, SAP SuccessFactors, Cornerstone LXP, TalentLMS, Disprz</em> can embed Vimeo/Wistia videos but rely on the learner clicking a "Mark Complete" button, or use iFrame tracking which is unreliable. Percentage-via-API requires a native connector, which only Docebo has matured.<br><br>
+      <strong>IndiaMART example:</strong> A WSB meet recording is hosted on Vimeo. Docebo's Vimeo connector pulls back that a Bengaluru rep watched only 15% of the 40-minute session. Their manager is automatically flagged, and the rep is re-notified to complete it before the next branch KPI review.</div>
+      <div class="platform-pills">
+        <span class="p-pill p-full">✓ Docebo</span>
+        <span class="p-pill p-partial">~ Workday/Sana</span>
+        <span class="p-pill p-partial">~ SAP Litmos</span>
+        <span class="p-pill p-partial">~ Cornerstone OD</span>
+        <span class="p-pill p-partial">~ Absorb LMS</span>
+        <span class="p-pill p-partial">~ SAP SuccessFactors</span>
+        <span class="p-pill p-partial">~ Cornerstone LXP</span>
+        <span class="p-pill p-partial">~ TalentLMS</span>
+        <span class="p-pill p-partial">~ Disprz</span>
+        <span class="p-pill p-none">✗ Learnyst/Graphy</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent1);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);">Category 3 · Administration & Authoring</div>
+  <div class="exp-grid" style="margin-bottom:32px;">
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(108,99,255,0.15)">✏️</div>
+        <div><div class="exp-card-title">Feature 6 · Rich WYSIWYG Course Editor + Version Control</div><div class="exp-card-sub">Clone modules, templates, admin edits</div></div>
+      </div>
+      <div class="exp-body">IndiaMART's Shubharambh induction exists in multiple variants — NSD (5 days), CSD/KCD (4 days + 1 extended day), Tele (4 days + 6 extended days), MPBI (3 days + 5.5 Tech Shubharambh). The L&D team needs to clone a base module and customise for each vertical without rebuilding from scratch, and maintain version control so older cohorts continue seeing the original content.<br><br>
+      <strong>Why SAP Litmos and TalentLMS are partial:</strong> Their built-in editors support basic content creation but version control is less robust — there's no true clone-and-branch workflow. Admins often resort to duplicating courses manually without a linked version history, making it hard to roll back changes.<br><br>
+      <strong>IndiaMART example:</strong> The L&D team updates the "WebERP Module" in Extended Shubharambh after a product update. Version control ensures the Oct 2024 cohort's training record still references the v1 content they completed, while Nov 2024 onwards gets v2 — preventing compliance audit confusion.</div>
+      <div class="platform-pills">
+        <span class="p-pill p-full">✓ Workday/Sana</span>
+        <span class="p-pill p-full">✓ Docebo</span>
+        <span class="p-pill p-full">✓ Cornerstone OD</span>
+        <span class="p-pill p-full">✓ Absorb LMS</span>
+        <span class="p-pill p-full">✓ SAP SuccessFactors</span>
+        <span class="p-pill p-full">✓ Cornerstone LXP</span>
+        <span class="p-pill p-full">✓ Disprz</span>
+        <span class="p-pill p-partial">~ SAP Litmos</span>
+        <span class="p-pill p-partial">~ TalentLMS</span>
+        <span class="p-pill p-partial">~ Learnyst/Graphy</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent1);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);">Category 4 · Progress Tracking</div>
+  <div class="exp-grid" style="margin-bottom:32px;">
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(247,151,30,0.15)">📈</div>
+        <div><div class="exp-card-title">Feature 7 · Real-time Learner Progress + Manager Dashboards</div><div class="exp-card-sub">% complete, time spent, completion deadlines</div></div>
+      </div>
+      <div class="exp-body">Branch managers and L&D coordinators need a live view of who has completed what — especially during time-bound programmes like Shubharambh (5 days), OJT (30 days), and FTM (quarterly). Managers should be able to filter by branch, vertical, level, and programme.<br><br>
+      <strong>Why Learnyst/Graphy is partial:</strong> These platforms offer basic learner progress views for individual instructors, but lack the hierarchical multi-branch manager dashboard that an enterprise like IndiaMART needs — where a Sales L5 in Delhi needs to see completion data across 20 reps in 3 different branch locations simultaneously.<br><br>
+      <strong>IndiaMART example:</strong> An NSD Area Manager sees on their Disprz dashboard that 14/20 reps have completed Day 3 of Shubharambh. The 6 incomplete reps are highlighted with their last login time. One rep hasn't logged in for 2 days — the system has already auto-sent an escalation email.</div>
+      <div class="platform-pills">
+        <span class="p-pill p-full">✓ Workday/Sana</span>
+        <span class="p-pill p-full">✓ SAP Litmos</span>
+        <span class="p-pill p-full">✓ Docebo</span>
+        <span class="p-pill p-full">✓ Cornerstone OD</span>
+        <span class="p-pill p-full">✓ Absorb LMS</span>
+        <span class="p-pill p-full">✓ SAP SuccessFactors</span>
+        <span class="p-pill p-full">✓ Cornerstone LXP</span>
+        <span class="p-pill p-full">✓ TalentLMS</span>
+        <span class="p-pill p-full">✓ Disprz</span>
+        <span class="p-pill p-partial">~ Learnyst/Graphy</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent1);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);">Category 5 · Personalised Learning Paths</div>
+  <div class="exp-grid" style="margin-bottom:32px;">
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(255,101,132,0.15)">🗺️</div>
+        <div><div class="exp-card-title">Feature 8 · Role/Level/Dept Auto-Assignment ★★</div><div class="exp-card-sub">Rules-based or AI-driven course assignment per segment</div></div>
+      </div>
+      <div class="exp-body">IndiaMART has arguably the most complex vertical segmentation of any Indian B2B tech company: Sales splits into NSD (field), CSD, KCD, and Tele (TA/TM/BD/WinBack) — each with different Shubharambh durations and OJT paths. MPBI splits into Engineering (campus vs lateral), Product (campus vs lateral), QA, and Category — each with unique FOB paths. TTT meets are only visible to L3+ employees; ELDP requires 3-year ratings of 4+; IMElevate targets only "hipot L1s."<br><br>
+      <strong>Why SAP Litmos and TalentLMS are partial:</strong> Both support basic group-based assignment, but the conditional rule engine is limited. Creating a rule like "assign ELDP only if employee.yearsAtCompany ≥ 3 AND employee.avgRating ≥ 4 AND employee.level IN [L3,L4,L5]" requires custom scripting rather than a GUI-driven rule builder, which limits the L&D team's ability to manage it without IT support.<br><br>
+      <strong>Why Learnyst/Graphy is a hard no:</strong> No concept of org hierarchy, roles, or auto-assignment. Every course assignment is manual — completely unscalable for IndiaMART's 5,000+ employee base across 6 verticals.<br><br>
+      <strong>IndiaMART example:</strong> When an NSD L1 employee is promoted to L2, Cornerstone OD automatically un-enrolls them from L1 paths and enrols them into TTT preparation content, the WSB facilitation guide, and flags them for consideration in the next IMElevate cohort — triggered purely by the level change in the HRMS feed.</div>
+      <div class="platform-pills">
+        <span class="p-pill p-full">✓ Workday/Sana</span>
+        <span class="p-pill p-full">✓ Docebo</span>
+        <span class="p-pill p-full">✓ Cornerstone OD</span>
+        <span class="p-pill p-full">✓ Absorb LMS</span>
+        <span class="p-pill p-full">✓ SAP SuccessFactors</span>
+        <span class="p-pill p-full">✓ Cornerstone LXP</span>
+        <span class="p-pill p-full">✓ Disprz</span>
+        <span class="p-pill p-partial">~ SAP Litmos</span>
+        <span class="p-pill p-partial">~ TalentLMS</span>
+        <span class="p-pill p-none">✗ Learnyst/Graphy</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(108,99,255,0.15)">👤</div>
+        <div><div class="exp-card-title">Feature 9 · Personal Employee Dashboard</div><div class="exp-card-sub">Individual learner view — own data only</div></div>
+      </div>
+      <div class="exp-body">Every IndiaMART employee — from an NSD L1 field rep to a Senior Engineer — needs a clean, private dashboard showing their own learning journey: what they've completed, what's pending, certifications earned (ILEAP, ELDP), and upcoming sessions. This creates ownership of learning and reduces dependency on managers to chase completions.<br><br>
+      <strong>Why Learnyst/Graphy is partial:</strong> Learner dashboards exist but are designed for external students purchasing courses — not internal employees with org-hierarchy context. There is no "my pending mandatory training" view or notification integration with HR systems.<br><br>
+      <strong>IndiaMART example:</strong> An MPBI Engineer logs into their dashboard and sees: Shubharambh complete ✓, Tech Shubharambh complete ✓, FOB-Common 6/8 modules done, AI Tech Session for March not yet watched, ILEAP application deadline in 7 days. Everything in one view, private to them.</div>
+      <div class="platform-pills">
+        <span class="p-pill p-full">✓ Workday/Sana</span>
+        <span class="p-pill p-full">✓ SAP Litmos</span>
+        <span class="p-pill p-full">✓ Docebo</span>
+        <span class="p-pill p-full">✓ Cornerstone OD</span>
+        <span class="p-pill p-full">✓ Absorb LMS</span>
+        <span class="p-pill p-full">✓ SAP SuccessFactors</span>
+        <span class="p-pill p-full">✓ Cornerstone LXP</span>
+        <span class="p-pill p-full">✓ TalentLMS</span>
+        <span class="p-pill p-full">✓ Disprz</span>
+        <span class="p-pill p-partial">~ Learnyst/Graphy</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent1);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);">Category 6 · Assessment & Quizzing</div>
+  <div class="exp-grid" style="margin-bottom:32px;">
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(67,233,123,0.15)">📝</div>
+        <div><div class="exp-card-title">Feature 10 · Built-in Quiz Engine + LTI Integrations (Kahoot)</div><div class="exp-card-sub">Grade pass-back, survey tools</div></div>
+      </div>
+      <div class="exp-body">IndiaMART uses quizzing at multiple touchpoints: Knowledge Ninja Assessments for CSD/KCD branch performance measurement, post-session quizzes after TTT meets, and Shubharambh day-end assessments. The L&D team also uses interactive tools like Kahoot during live sessions — the LMS should integrate with LTI-compliant tools and pass grades back automatically.<br><br>
+      <strong>Why Learnyst/Graphy is partial:</strong> Basic multiple-choice quizzes are supported, but LTI integration for external tools (Kahoot, Mentimeter) and grade pass-back pipelines are absent. The L&D team would need to manually enter Kahoot scores into the LMS — defeating the purpose of integration.<br><br>
+      <strong>IndiaMART example:</strong> During an FTM session in Hyderabad, the trainer runs a Kahoot quiz on leadership scenarios. The LMS (via LTI) captures every participant's score and maps it to their learner profile. Employees who score below 60% are automatically enrolled in a follow-up "Leadership Scenarios" micro-module.</div>
+      <div class="platform-pills">
+        <span class="p-pill p-full">✓ Workday/Sana</span>
+        <span class="p-pill p-full">✓ SAP Litmos</span>
+        <span class="p-pill p-full">✓ Docebo</span>
+        <span class="p-pill p-full">✓ Cornerstone OD</span>
+        <span class="p-pill p-full">✓ Absorb LMS</span>
+        <span class="p-pill p-full">✓ SAP SuccessFactors</span>
+        <span class="p-pill p-full">✓ Cornerstone LXP</span>
+        <span class="p-pill p-full">✓ TalentLMS</span>
+        <span class="p-pill p-full">✓ Disprz</span>
+        <span class="p-pill p-partial">~ Learnyst/Graphy</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(247,151,30,0.15)">🤖</div>
+        <div><div class="exp-card-title">Feature 11 · AI Quiz / Question Generator</div><div class="exp-card-sub">Auto-generate questions from uploaded content</div></div>
+      </div>
+      <div class="exp-body">The L&D team at IndiaMART frequently adds new content — product update DEAL sessions, Tech Learning recordings, AI Tech sessions on GenAI and prompt engineering. Manually creating quiz questions for every session is time-consuming. AI quiz generators automatically extract key concepts from uploaded videos or documents and suggest question banks.<br><br>
+      <strong>Why Workday/Sana leads:</strong> Sana is AI-native and can generate full assessments, course outlines, and adaptive quizzes directly from content — the most mature implementation. Disprz also offers strong AI quiz generation. Most other platforms (SAP Litmos, Cornerstone, Absorb, SAP SuccessFactors) have added AI quiz generation as a beta or limited feature, not production-ready.<br><br>
+      <strong>Why TalentLMS and Learnyst/Graphy have none:</strong> No AI content tooling at all — quiz creation is fully manual.<br><br>
+      <strong>IndiaMART example:</strong> After uploading the March AI Tech Session recording (45 minutes, covering prompt engineering basics), the LMS auto-generates 8 quiz questions with IndiaMART-specific distractors. The L&D admin reviews, edits 2 questions, and publishes — what would take 2 hours takes 15 minutes.</div>
+      <div class="platform-pills">
+        <span class="p-pill p-full">✓ Workday/Sana</span>
+        <span class="p-pill p-full">✓ Disprz</span>
+        <span class="p-pill p-partial">~ SAP Litmos</span>
+        <span class="p-pill p-partial">~ Docebo</span>
+        <span class="p-pill p-partial">~ Cornerstone OD</span>
+        <span class="p-pill p-partial">~ Absorb LMS</span>
+        <span class="p-pill p-partial">~ SAP SuccessFactors</span>
+        <span class="p-pill p-partial">~ Cornerstone LXP</span>
+        <span class="p-pill p-none">✗ TalentLMS</span>
+        <span class="p-pill p-none">✗ Learnyst/Graphy</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent1);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);">Categories 7–10 · Notifications, AI, Access Control & Security</div>
+  <div class="exp-grid" style="margin-bottom:32px;">
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(67,233,123,0.15)">🔔</div>
+        <div><div class="exp-card-title">Feature 12 · Automated Alerts & LMS Calendar</div><div class="exp-card-sub">Due dates, upcoming sessions, deadline reminders</div></div>
+      </div>
+      <div class="exp-body">IndiaMART's training calendar is dense: Shubharambh every joining batch, WSB meets every Wednesday, TTT meets for L3+, IMElevate quarterly, FTM quarterly, DEAL sessions ad hoc. Employees need timely LMS reminders and managers need deadline escalation alerts — all automated, not manually emailed.<br><br>
+      <strong>Why Learnyst/Graphy is partial:</strong> Basic email notifications on course assignment exist, but LMS calendar integration (showing training schedules inside the learner app), escalation rules (e.g., "send manager alert if course not started 48 hours before deadline"), and bulk scheduling are absent.<br><br>
+      <strong>IndiaMART example:</strong> Every Tuesday at 4pm, all CSD/KCD employees receive an automated LMS push notification: "WSB Meet tomorrow at 10am — pre-read the DEAL session from last week." The system also flags employees whose 30-day OJT deadline is within 3 days and haven't completed more than 60% — escalating to their branch manager automatically.</div>
+      <div class="platform-pills">
+        <span class="p-pill p-full">✓ Workday/Sana</span>
+        <span class="p-pill p-full">✓ SAP Litmos</span>
+        <span class="p-pill p-full">✓ Docebo</span>
+        <span class="p-pill p-full">✓ Cornerstone OD</span>
+        <span class="p-pill p-full">✓ Absorb LMS</span>
+        <span class="p-pill p-full">✓ SAP SuccessFactors</span>
+        <span class="p-pill p-full">✓ Cornerstone LXP</span>
+        <span class="p-pill p-full">✓ TalentLMS</span>
+        <span class="p-pill p-full">✓ Disprz</span>
+        <span class="p-pill p-partial">~ Learnyst/Graphy</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(108,99,255,0.15)">✨</div>
+        <div><div class="exp-card-title">Feature 13 · AI Search, Recommendations & Content Auto-Tagging ★</div><div class="exp-card-sub">Course outline generators, adaptive learning tutors</div></div>
+      </div>
+      <div class="exp-body">With 6 verticals, 20+ named programmes, and dozens of modules, employees need to be able to find content quickly and receive intelligent recommendations — not scroll through a flat catalogue. AI search should understand natural language queries like "show me what I need for FTM preparation" and surface the right modules.<br><br>
+      <strong>Why TalentLMS and Learnyst/Graphy have none:</strong> Basic keyword search only, with no semantic understanding or recommendation engine. An NSD L2 employee would see everything in the catalogue with no personalised filtering.<br><br>
+      <strong>Why SAP Litmos, Absorb, and SAP SuccessFactors are partial:</strong> These platforms have added AI features but they are primarily in the recommendation layer — not the full suite of content auto-tagging, course outline generation, and adaptive tutors that Workday/Sana and Disprz offer.<br><br>
+      <strong>IndiaMART example:</strong> An L3 CSD employee who just passed IMElevate gets an AI-triggered recommendation: "Based on your IMElevate completion and L3 designation, you may be eligible for FTM — here's what to expect." The system auto-tags the employee's profile with "IMElevate-complete" and surfaces the FTM pre-read content proactively.</div>
+      <div class="platform-pills">
+        <span class="p-pill p-full">✓ Workday/Sana</span>
+        <span class="p-pill p-full">✓ Docebo</span>
+        <span class="p-pill p-full">✓ Cornerstone OD</span>
+        <span class="p-pill p-full">✓ Cornerstone LXP</span>
+        <span class="p-pill p-full">✓ Disprz</span>
+        <span class="p-pill p-partial">~ SAP Litmos</span>
+        <span class="p-pill p-partial">~ Absorb LMS</span>
+        <span class="p-pill p-partial">~ SAP SuccessFactors</span>
+        <span class="p-pill p-none">✗ TalentLMS</span>
+        <span class="p-pill p-none">✗ Learnyst/Graphy</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(255,101,132,0.15)">🔐</div>
+        <div><div class="exp-card-title">Feature 14 · Dept/Location/Level Segmented Access + Certifications</div><div class="exp-card-sub">Audit trails, compliance tracking</div></div>
+      </div>
+      <div class="exp-body">IndiaMART's complex org requires granular access control: TTT content is L3+ only, ELDP requires a 3-year rating of 4+, Gallup Strength Based Training requires L5+ certification, and QA Tester Meets are MPBI-only. A CSD L1 employee should never see Engineering FOB content. The LMS must enforce these walls automatically and maintain audit trails for compliance.<br><br>
+      <strong>Why Learnyst/Graphy is partial:</strong> Basic "groups" exist but there is no multi-level org hierarchy enforcement — you can't create rules that combine level + location + vertical + eligibility criteria. Audit trail export for compliance is also absent.<br><br>
+      <strong>IndiaMART example:</strong> Gallup Strength Based Training is restricted to L5+ employees with a valid Gallup certificate (imported from the third-party Gallup system via API). When an employee reaches L5, the system auto-checks their profile for a Gallup certificate and only then unlocks the training. Without the certificate, the course is invisible — not just locked.</div>
+      <div class="platform-pills">
+        <span class="p-pill p-full">✓ Workday/Sana</span>
+        <span class="p-pill p-full">✓ SAP Litmos</span>
+        <span class="p-pill p-full">✓ Docebo</span>
+        <span class="p-pill p-full">✓ Cornerstone OD</span>
+        <span class="p-pill p-full">✓ Absorb LMS</span>
+        <span class="p-pill p-full">✓ SAP SuccessFactors</span>
+        <span class="p-pill p-full">✓ Cornerstone LXP</span>
+        <span class="p-pill p-full">✓ TalentLMS</span>
+        <span class="p-pill p-full">✓ Disprz</span>
+        <span class="p-pill p-partial">~ Learnyst/Graphy</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(67,233,123,0.15)">🔒</div>
+        <div><div class="exp-card-title">Feature 15 · GDPR/ISO Compliance, Data Encryption, Uptime SLA</div><div class="exp-card-sub">Enterprise-grade security for employee data</div></div>
+      </div>
+      <div class="exp-body">IndiaMART handles personal data for thousands of employees including performance ratings, assessment scores, and attendance logs — all of which are sensitive HR data. The LMS must comply with applicable data protection standards, encrypt data at rest and in transit, and guarantee high availability SLAs (99.9%+) to not disrupt business-critical induction programmes like Shubharambh.<br><br>
+      <strong>Why TalentLMS is partial:</strong> TalentLMS offers GDPR compliance tools and SSL encryption, but its SLA tiers and audit-level certifications (SOC 2 Type II, ISO 27001) are less formally documented compared to enterprise-grade competitors. For a large org like IndiaMART, this requires explicit contractual verification.<br><br>
+      <strong>Why Learnyst/Graphy has none:</strong> These are SaaS course-creator platforms not designed for enterprise-grade security compliance. No documented SOC 2, no formal DPA, and no uptime SLA guarantees at enterprise scale — a dealbreaker for IndiaMART's IT and legal teams.<br><br>
+      <strong>IndiaMART example:</strong> IndiaMART's L&D and IT security teams require a signed Data Processing Agreement (DPA) and SOC 2 Type II audit report before going live. Disprz, Docebo, and Cornerstone all provide these; Learnyst/Graphy cannot.</div>
+      <div class="platform-pills">
+        <span class="p-pill p-full">✓ Workday/Sana</span>
+        <span class="p-pill p-full">✓ SAP Litmos</span>
+        <span class="p-pill p-full">✓ Docebo</span>
+        <span class="p-pill p-full">✓ Cornerstone OD</span>
+        <span class="p-pill p-full">✓ Absorb LMS</span>
+        <span class="p-pill p-full">✓ SAP SuccessFactors</span>
+        <span class="p-pill p-full">✓ Cornerstone LXP</span>
+        <span class="p-pill p-full">✓ Disprz</span>
+        <span class="p-pill p-partial">~ TalentLMS</span>
+        <span class="p-pill p-none">✗ Learnyst/Graphy</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent1);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);">Categories 11–16 · Reporting, UX, Scale, Social, Attendance & Localisation</div>
+  <div class="exp-grid" style="margin-bottom:32px;">
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(247,151,30,0.15)">📊</div>
+        <div><div class="exp-card-title">Feature 16 · Custom Report Builder + API Export + Scheduled Reports ★</div><div class="exp-card-sub">Multi-dimensional filtering, automated dashboards</div></div>
+      </div>
+      <div class="exp-body">IndiaMART's L&D team needs to report on training impact across multiple dimensions: completion rates per branch (for NSD WSB meets), assessment performance per vertical (for Knowledge Ninja), ELDP eligibility tracking by rating (for succession planning), and ILEAP certificate counts per team. These reports need to be scheduled and auto-emailed to HRBPs and VPs.<br><br>
+      <strong>Why SAP Litmos is partial:</strong> Standard report templates are well-designed, but the custom report builder has limited filter combinations — building a "NSD L1 employees who completed OJT but not IMpactful, by city" filter requires manual export to Excel. No native API export for BI tool integration.<br><br>
+      <strong>Why TalentLMS is partial:</strong> Good basic reporting but custom dimensions (filtering by branch + level + programme + date range simultaneously) require the premium plan and still lack true API scheduling.<br><br>
+      <strong>Why Learnyst/Graphy has none:</strong> No custom report builder. Data is only visible in the admin panel as basic aggregate counts — no export API, no scheduled delivery, no multi-dimensional filter.<br><br>
+      <strong>IndiaMART example:</strong> The VP of Sales receives an automated Monday morning email report: "Last week's WSB Meet completion — Delhi: 87%, Mumbai: 92%, Bengaluru: 74%, Chennai: 68%. Branches below 75% have been auto-notified." This report is built once in Docebo and runs every Monday without L&D admin involvement.</div>
+      <div class="platform-pills">
+        <span class="p-pill p-full">✓ Workday/Sana</span>
+        <span class="p-pill p-full">✓ Docebo</span>
+        <span class="p-pill p-full">✓ Cornerstone OD</span>
+        <span class="p-pill p-full">✓ Absorb LMS</span>
+        <span class="p-pill p-full">✓ SAP SuccessFactors</span>
+        <span class="p-pill p-full">✓ Cornerstone LXP</span>
+        <span class="p-pill p-full">✓ Disprz</span>
+        <span class="p-pill p-partial">~ SAP Litmos</span>
+        <span class="p-pill p-partial">~ TalentLMS</span>
+        <span class="p-pill p-none">✗ Learnyst/Graphy</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(108,99,255,0.15)">🎨</div>
+        <div><div class="exp-card-title">Feature 17 · Intuitive UI/UX — Easy Course Access & Enrolment</div><div class="exp-card-sub">Mobile-friendly, low-friction learner interface</div></div>
+      </div>
+      <div class="exp-body">IndiaMART's learner base ranges from Sales L1 field reps (tech-light users on Android phones) to Senior Engineers in MPBI (technically sophisticated desktop users). The LMS must be effortlessly navigable on both. High cognitive load or complicated navigation leads to drop-offs — especially during the 30-day OJT where motivation may already be stretched.<br><br>
+      <strong>Why Cornerstone OD is partial:</strong> The core Cornerstone OnDemand UI is widely considered dated and cluttered — user reviews consistently cite difficulty finding courses and navigating modules, especially on mobile. The Cornerstone LXP (Edge) has improved UX but is a separate product.<br><br>
+      <strong>Why SAP SuccessFactors Learning is partial:</strong> The Learning module within SAP SuccessFactors has a dated, enterprise-grade UI that prioritises compliance over learner experience. NSD field sales reps using low-end Android devices may find it frustrating.<br><br>
+      <strong>IndiaMART example:</strong> A new Tele (TA) joinee opens the LMS app on their first day. On Disprz or Docebo, they see a clean card: "Your Shubharambh journey — Day 1: Company Overview (30 min)" with a single tap to start. On Cornerstone OD's base product, they may encounter a multi-level navigation tree before reaching the same content.</div>
+      <div class="platform-pills">
+        <span class="p-pill p-full">✓ Workday/Sana</span>
+        <span class="p-pill p-full">✓ SAP Litmos</span>
+        <span class="p-pill p-full">✓ Docebo</span>
+        <span class="p-pill p-full">✓ Absorb LMS</span>
+        <span class="p-pill p-full">✓ TalentLMS</span>
+        <span class="p-pill p-full">✓ Disprz</span>
+        <span class="p-pill p-full">✓ Learnyst/Graphy</span>
+        <span class="p-pill p-partial">~ Cornerstone OD</span>
+        <span class="p-pill p-partial">~ SAP SuccessFactors</span>
+        <span class="p-pill p-partial">~ Cornerstone LXP</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(67,233,123,0.15)">🚀</div>
+        <div><div class="exp-card-title">Feature 18 · Scalability — 1000+ Concurrent Users, Multi-lingual</div><div class="exp-card-sub">No slowdown at enterprise scale</div></div>
+      </div>
+      <div class="exp-body">IndiaMART runs large-batch Shubharambh inductions — entire joining cohorts for multiple verticals starting simultaneously. On Day 1 of a large Sales batch, hundreds of employees across India may be accessing the LMS concurrently, watching videos, submitting quizzes, and logging attendance. The platform must not degrade under load.<br><br>
+      <strong>Why TalentLMS is partial:</strong> TalentLMS handles mid-market workloads well (up to ~1,000 users) but at IndiaMART's enterprise scale (5,000+ employees, high-concurrency induction days), performance guarantees and SLA tiers are less robust than the enterprise platforms. It's a great fit for smaller deployments, less so for all-company simultaneous training.<br><br>
+      <strong>Why Learnyst/Graphy is a hard no:</strong> These platforms are built for individual course creators with hundreds of students, not enterprise cohorts of thousands. Concurrent access at IndiaMART's scale would overwhelm the infrastructure — and there is no enterprise SLA to protect against this.<br><br>
+      <strong>IndiaMART example:</strong> On the first day of a 200-person joining cohort in January (across NSD, CSD, Engineering, and Product), all 200 employees simultaneously open Shubharambh Day 1 at 9am. Enterprise platforms like Disprz, SAP SuccessFactors, and Cornerstone handle this with no perceptible slowdown. Learnyst/Graphy would fail.</div>
+      <div class="platform-pills">
+        <span class="p-pill p-full">✓ Workday/Sana</span>
+        <span class="p-pill p-full">✓ SAP Litmos</span>
+        <span class="p-pill p-full">✓ Docebo</span>
+        <span class="p-pill p-full">✓ Cornerstone OD</span>
+        <span class="p-pill p-full">✓ Absorb LMS</span>
+        <span class="p-pill p-full">✓ SAP SuccessFactors</span>
+        <span class="p-pill p-full">✓ Cornerstone LXP</span>
+        <span class="p-pill p-full">✓ Disprz</span>
+        <span class="p-pill p-partial">~ TalentLMS</span>
+        <span class="p-pill p-none">✗ Learnyst/Graphy</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(255,101,132,0.15)">🏆</div>
+        <div><div class="exp-card-title">Feature 19 · Forums, Peer Learning, Leaderboards & Badges</div><div class="exp-card-sub">Social learning + gamification for engagement</div></div>
+      </div>
+      <div class="exp-body">IndiaMART has programmes specifically designed for engagement and community — Product Hive/Product Meet (MPBI), Hackathons (MPBI), and IMpactful (interpersonal skills). Social LMS features like discussion boards, peer ratings, badges, and leaderboards transform these one-time events into ongoing learning communities and drive competitive engagement.<br><br>
+      <strong>Why Workday/Sana, SAP Litmos, Absorb, and SAP SuccessFactors are partial:</strong> Basic badges/points exist but forums and true peer-learning communities are either absent or bolted on. These platforms excel at structured learning delivery but don't create a social learning culture.<br><br>
+      <strong>Why Learnyst/Graphy is partial:</strong> Student community features exist for external learners (comments on course pages) but lack the enterprise social graph needed for IndiaMART — no org-structured discussion boards, no leaderboards tied to business roles.<br><br>
+      <strong>IndiaMART example:</strong> After each monthly Product Hive session, the LMS (Docebo) automatically opens a 7-day discussion thread: "What tool insight from today's session will you implement this week?" Product team members post responses, upvote each other's ideas, and earn "Knowledge Sharer" badges. Top contributors are displayed on a leaderboard visible to HODs — making learning visible and celebrated.</div>
+      <div class="platform-pills">
+        <span class="p-pill p-full">✓ Docebo</span>
+        <span class="p-pill p-full">✓ Cornerstone OD</span>
+        <span class="p-pill p-full">✓ Cornerstone LXP</span>
+        <span class="p-pill p-full">✓ TalentLMS</span>
+        <span class="p-pill p-full">✓ Disprz</span>
+        <span class="p-pill p-partial">~ Workday/Sana</span>
+        <span class="p-pill p-partial">~ SAP Litmos</span>
+        <span class="p-pill p-partial">~ Absorb LMS</span>
+        <span class="p-pill p-partial">~ SAP SuccessFactors</span>
+        <span class="p-pill p-partial">~ Learnyst/Graphy</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(247,151,30,0.15)">📍</div>
+        <div><div class="exp-card-title">Feature 20 · QR Code / Geolocation / Badge Scan Attendance ★★</div><div class="exp-card-sub">Digital attendance for offline and online sessions on LMS</div></div>
+      </div>
+      <div class="exp-body">This is IndiaMART's <strong>most differentiating LMS requirement</strong> and the single biggest reason to consider Disprz above all others. Shubharambh (5-day induction for every vertical), FTM (city-specific offline sessions quarterly), WSB Wednesday meets (branch-level weekly), and TTT meets all require in-person attendance to be captured digitally and fed directly into the LMS — currently managed via spreadsheets, which is error-prone and creates reconciliation work.<br><br>
+      <strong>Why most platforms are partial:</strong> <em>SAP Litmos, Docebo, Cornerstone OD, Absorb, SAP SuccessFactors, Cornerstone LXP, TalentLMS</em> all support Instructor-Led Training (ILT) session management — the trainer can mark attendance manually in the platform. However, QR code self-scan (employees scan on arrival), geolocation check-in (geo-confirm physical presence for field visits), and badge scan are either third-party integrations or entirely absent. This means the bottleneck is still the trainer manually marking 20–50 people, which is time-consuming and error-prone for FTM sessions in remote cities.<br><br>
+      <strong>Why Workday/Sana and Learnyst/Graphy have none:</strong> No ILT attendance infrastructure at all for Workday/Sana in the traditional sense — it's designed for digital-first learning. Learnyst/Graphy is not an enterprise L&D platform and has no attendance concept.<br><br>
+      <strong>IndiaMART example:</strong> Day 1 of the January Shubharambh induction in Bengaluru. As each of the 35 new joiners walks into the training room, they scan the QR code displayed on the projector screen using the Disprz mobile app. Their attendance is recorded in the LMS in real time. The HR team in Noida sees "Bengaluru Shubharambh Day 1: 33/35 present" without waiting for an email from the trainer. The 2 absentees are auto-flagged. At the end of 5 days, the LMS generates a signed digital attendance report — no spreadsheet required.</div>
+      <div class="platform-pills">
+        <span class="p-pill p-full">✓ Disprz</span>
+        <span class="p-pill p-partial">~ SAP Litmos</span>
+        <span class="p-pill p-partial">~ Docebo</span>
+        <span class="p-pill p-partial">~ Cornerstone OD</span>
+        <span class="p-pill p-partial">~ Absorb LMS</span>
+        <span class="p-pill p-partial">~ SAP SuccessFactors</span>
+        <span class="p-pill p-partial">~ Cornerstone LXP</span>
+        <span class="p-pill p-partial">~ TalentLMS</span>
+        <span class="p-pill p-none">✗ Workday/Sana</span>
+        <span class="p-pill p-none">✗ Learnyst/Graphy</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(108,99,255,0.15)">🌐</div>
+        <div><div class="exp-card-title">Feature 21 · Hindi + English Interface & Content Support ★</div><div class="exp-card-sub">Multi-language UI and content delivery</div></div>
+      </div>
+      <div class="exp-body">IndiaMART's sales force — especially NSD field sales, CSD, KCD, and Tele — operates predominantly in Hindi in large parts of India (North, Central, and West). A platform UI locked to English creates a significant friction point for L1 and L2 sales reps who are comfortable in Hindi. The LMS should allow the UI language to switch to Hindi and allow admins to upload content in both languages.<br><br>
+      <strong>Why Workday/Sana is partial:</strong> Workday Learning/Sana is primarily an English-first global platform. Hindi is listed as a supported UI language in Workday's global language pack, but localization quality for Hindi is inconsistent — many labels and system messages remain in English, and the Sana AI layer (for quiz generation) works best in English. For a front-line NSD sales rep in Lucknow, this creates a broken experience.<br><br>
+      <strong>Why Learnyst/Graphy is partial:</strong> Basic Hindi content can be uploaded (video, PDF), but the platform UI itself (navigation, notifications, system messages) is primarily English. There is no full Hindi UI localisation for the learner app.<br><br>
+      <strong>IndiaMART example:</strong> An NSD L1 rep joining from a Tier 3 city switches their Disprz app language to Hindi on Day 1 of Shubharambh. All navigation labels, module titles, quiz prompts, and notification messages appear in Hindi. The Company Overview video was also uploaded in a Hindi-dubbed version — the learner gets a fully Hindi experience without L&D manually creating a parallel course structure.</div>
+      <div class="platform-pills">
+        <span class="p-pill p-full">✓ SAP Litmos</span>
+        <span class="p-pill p-full">✓ Docebo</span>
+        <span class="p-pill p-full">✓ Cornerstone OD</span>
+        <span class="p-pill p-full">✓ Absorb LMS</span>
+        <span class="p-pill p-full">✓ SAP SuccessFactors</span>
+        <span class="p-pill p-full">✓ Cornerstone LXP</span>
+        <span class="p-pill p-full">✓ TalentLMS</span>
+        <span class="p-pill p-full">✓ Disprz</span>
+        <span class="p-pill p-partial">~ Workday/Sana</span>
+        <span class="p-pill p-partial">~ Learnyst/Graphy</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SUMMARY NOTE -->
+  <div style="padding:20px 24px;background:rgba(108,99,255,0.07);border:1px solid rgba(108,99,255,0.2);border-radius:12px;border-left:3px solid var(--accent1);margin-top:8px;">
+    <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;margin-bottom:8px;color:var(--text)">★ Features Most Unique to IndiaMART</div>
+    <p style="font-size:12.5px;color:var(--muted);line-height:1.8">The features marked with ★ above are where IndiaMART's needs diverge most sharply from a "standard" LMS evaluation: <strong style="color:var(--text)">Offline Sync</strong> (NSD field OJT in low-connectivity areas), <strong style="color:var(--text)">QR Attendance</strong> (Shubharambh, WSB, FTM), <strong style="color:var(--text)">Role/Level Auto-Assignment</strong> (10+ unique learning paths across 6 verticals), <strong style="color:var(--text)">AI Recommendations</strong> (on-demand priority queue), and <strong style="color:var(--text)">Hindi Localisation</strong> (front-line sales workforce). These five features alone should drive the final platform decision — and only Disprz fully covers all five.</p>
+  </div>
+
+</div>
+
+<!-- ============================================================ SECTION 3: JOURNEYS -->
+<div id="journeys" class="section">
+  <div class="section-title">LMS Features Applied to IndiaMART Training Journeys</div>
+  <div class="section-sub">Real examples of how each LMS feature maps to specific programmes from the T&D Journey document.</div>
+
+  <div class="journey-section">
+    <h3>🛒 Sales Vertical — NSD Field Sales</h3>
+    <p class="journey-sub">New Joinee path: Shubharambh → OJT (30 days) → TTT Meets → WSB Meets | Current: IMpactful, IM Elevate, FTM, ELDP, On-Demand</p>
+    <div class="journey-grid">
+
+      <div class="journey-card sales">
+        <div class="training-type">Shubharambh · 5 Days · New Joinee</div>
+        <h4>Personalised Path Assignment + Attendance Tracking</h4>
+        <p>When a new NSD field sales hire joins, the LMS <strong>auto-assigns the "Shubharambh" path</strong> (Company Overview, Business Model, FCP, Sales Process) based on their role tag "NSD-L1-Field". <strong>QR code attendance</strong> is scanned each morning to record daily induction attendance — this syncs directly to the LMS, visible to HR and the branch manager.</p>
+        <div class="lms-rec"><div class="lms-rec-label">Best Platforms</div><div class="lms-tags"><span class="lms-tag lms-best">Disprz (QR Attendance)</span><span class="lms-tag lms-best">Cornerstone OD</span><span class="lms-tag lms-ok">Docebo</span></div></div>
+      </div>
+
+      <div class="journey-card sales">
+        <div class="training-type">OJT · 30 Days · New Joinee</div>
+        <h4>xAPI Offline Tracking + Shadowing Logs</h4>
+        <p>During 30-day OJT, field sales reps shadow buddies and managers across locations with variable connectivity. <strong>xAPI tracks every shadowing interaction</strong> — which modules were accessed, paused, or replayed on mobile. If a rep is offline in a rural area, data <strong>syncs when they reconnect</strong>. The L&D team can see time spent on "Lead Management" vs "RCA" modules at an aggregate level.</p>
+        <div class="lms-rec"><div class="lms-rec-label">Best Platforms</div><div class="lms-tags"><span class="lms-tag lms-best">Disprz (Offline Sync + xAPI)</span><span class="lms-tag lms-ok">Cornerstone OD</span><span class="lms-tag lms-ok">Absorb LMS</span></div></div>
+      </div>
+
+      <div class="journey-card sales">
+        <div class="training-type">WSB Meets · Weekly · Current Employees</div>
+        <h4>Session Recording Upload + Notifications</h4>
+        <p>Wednesday Branch Sessions (WSB) are recorded and uploaded to the LMS as video content. <strong>Employees who missed the live session get an automated LMS notification</strong> with a link to catch up. The platform tracks who watched the recording and for how long, giving branch managers a completion report for each WSB cycle.</p>
+        <div class="lms-rec"><div class="lms-rec-label">Best Platforms</div><div class="lms-tags"><span class="lms-tag lms-best">Docebo (Video + Notifications)</span><span class="lms-tag lms-best">Cornerstone LXP</span><span class="lms-tag lms-ok">Disprz</span></div></div>
+      </div>
+
+      <div class="journey-card sales">
+        <div class="training-type">TTT Meets · L3+ Employees</div>
+        <h4>Role-Based Access Control</h4>
+        <p>TTT (Train the Trainer) content is only visible to <strong>L3 and above employees</strong>. The LMS enforces this with role-based rules — an L1 employee logging in simply does not see TTT modules in their dashboard. When an employee is promoted to L3, the LMS <strong>auto-enrolls them in TTT</strong> through an HRMS integration trigger.</p>
+        <div class="lms-rec"><div class="lms-rec-label">Best Platforms</div><div class="lms-tags"><span class="lms-tag lms-best">Cornerstone OD</span><span class="lms-tag lms-best">SAP SuccessFactors</span><span class="lms-tag lms-ok">Docebo</span></div></div>
+      </div>
+
+      <div class="journey-card sales">
+        <div class="training-type">On Demand Training · Priority List</div>
+        <h4>AI-Driven Recommendations + Priority Queue</h4>
+        <p>The LMS uses <strong>AI recommendation engines</strong> to surface on-demand training to employees who need it most — based on their assessment scores, quiz failure patterns, and performance data fed from HRMS. An employee who repeatedly scores low on "Objection Handling" quizzes is auto-recommended the relevant on-demand module. Managers see a <strong>curated priority list</strong> in their dashboard.</p>
+        <div class="lms-rec"><div class="lms-rec-label">Best Platforms</div><div class="lms-tags"><span class="lms-tag lms-best">Workday/Sana (AI-native)</span><span class="lms-tag lms-best">Disprz</span><span class="lms-tag lms-ok">Cornerstone LXP</span></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="journey-section">
+    <h3>📞 Sales Vertical — CSD, KCD & Tele</h3>
+    <p class="journey-sub">New: Shubharambh + Extended Shubharambh + OJT | Current: DEAL, Knowledge Ninja, IMpactful, IMElevate, FTM, ELDP</p>
+    <div class="journey-grid">
+
+      <div class="journey-card sales">
+        <div class="training-type">DEAL Sessions · Product Updates</div>
+        <h4>Rapid Content Push + Completion Tracking</h4>
+        <p>DEAL (Drop Everything & Learn) sessions are urgent product update notifications. The LMS pushes an <strong>instant in-app notification</strong> to all CSD/KCD employees. Each session is tracked — who accessed it, when, and whether they completed it within the expected window. <strong>Branch engagement scores</strong> are calculated from DEAL completion rates.</p>
+        <div class="lms-rec"><div class="lms-rec-label">Best Platforms</div><div class="lms-tags"><span class="lms-tag lms-best">Disprz</span><span class="lms-tag lms-best">SAP Litmos</span><span class="lms-tag lms-ok">TalentLMS</span></div></div>
+      </div>
+
+      <div class="journey-card sales">
+        <div class="training-type">Knowledge Ninja Assessment · Branch Performance</div>
+        <h4>Detailed Assessment Analytics</h4>
+        <p>Knowledge Ninja assessments test post-session understanding. The LMS captures <strong>which specific questions were answered incorrectly</strong>, by which branch, in which week. An <strong>aggregate analytics dashboard</strong> shows the L&D team that "Q4 on WebERP Ticket Handling" has a 62% failure rate across 3 branches — triggering a targeted remedial session.</p>
+        <div class="lms-rec"><div class="lms-rec-label">Best Platforms</div><div class="lms-tags"><span class="lms-tag lms-best">Docebo</span><span class="lms-tag lms-best">Cornerstone OD</span><span class="lms-tag lms-best">Disprz</span></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="journey-section">
+    <h3>💻 Engineering Vertical — MPBI</h3>
+    <p class="journey-sub">New: Shubharambh + Tech Shubharambh + FOB Common + FOB Team Specific | Current: Tech Learning, AI Tech Sessions, ELDP, Webinar, ILEAP, Future Leaders</p>
+    <div class="journey-grid">
+
+      <div class="journey-card tech">
+        <div class="training-type">FOB Team Specific · Tech Shubharambh</div>
+        <h4>Team-Segmented Learning Paths</h4>
+        <p>Engineers joining the Marketplace (MP) team see a different FOB-Team Specific path than those joining BI. The LMS <strong>auto-assigns the correct tech stack module</strong> (React/Node for MP; SQL/Tableau for BI) based on the employee's team tag. <strong>Version control</strong> ensures the latest updated language content is always served — no stale modules.</p>
+        <div class="lms-rec"><div class="lms-rec-label">Best Platforms</div><div class="lms-tags"><span class="lms-tag lms-best">Cornerstone OD</span><span class="lms-tag lms-best">Docebo</span><span class="lms-tag lms-ok">SAP SuccessFactors</span></div></div>
+      </div>
+
+      <div class="journey-card tech">
+        <div class="training-type">AI Tech Sessions · Monthly · All Engineers</div>
+        <h4>AI Content Creation + Webinar Tracking</h4>
+        <p>Monthly AI Tech sessions on prompt engineering and GenAI are uploaded as recordings. The LMS <strong>auto-generates a quiz</strong> from the session content using AI, testing whether engineers understood key concepts. Attendance for live sessions is tracked via <strong>virtual classroom integration</strong>, and employees who missed it are assigned the recording with a completion deadline.</p>
+        <div class="lms-rec"><div class="lms-rec-label">Best Platforms</div><div class="lms-tags"><span class="lms-tag lms-best">Workday/Sana (AI quiz gen)</span><span class="lms-tag lms-best">Disprz</span><span class="lms-tag lms-ok">Docebo</span></div></div>
+      </div>
+
+      <div class="journey-card tech">
+        <div class="training-type">ILEAP · Certificate Courses · College Scholarships</div>
+        <h4>External Course Integration + Certification Tracking</h4>
+        <p>ILEAP certificate courses from top colleges are externally hosted. The LMS integrates via <strong>xAPI or LTI</strong> to receive completion certificates from these external platforms. Employee profiles are automatically updated with new certifications, visible to managers during succession planning and performance reviews.</p>
+        <div class="lms-rec"><div class="lms-rec-label">Best Platforms</div><div class="lms-tags"><span class="lms-tag lms-best">Cornerstone OD</span><span class="lms-tag lms-best">Docebo</span><span class="lms-tag lms-ok">Absorb LMS</span></div></div>
+      </div>
+
+      <div class="journey-card tech">
+        <div class="training-type">Future Leaders Training · Annual · Succession Planning</div>
+        <h4>ELDP Compliance + Eligibility Rules</h4>
+        <p>The 9–12 month Future Leaders programme requires employees to have a <strong>3-year performance rating of 4+</strong>. The LMS enforces this via an HRMS data integration — employees who don't meet the criteria are automatically excluded from the programme assignment. Progress through the programme is tracked over 9 months with manager check-in milestones.</p>
+        <div class="lms-rec"><div class="lms-rec-label">Best Platforms</div><div class="lms-tags"><span class="lms-tag lms-best">SAP SuccessFactors</span><span class="lms-tag lms-best">Cornerstone OD</span><span class="lms-tag lms-ok">Docebo</span></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="journey-section">
+    <h3>🏢 Corporate & Product (MPBI) Vertical</h3>
+    <p class="journey-sub">Corporate: Shubharambh + On Demand + IMReady + ELDP | Product: Tech Shubharambh + Field Visit + Product OJT + Product Hive</p>
+    <div class="journey-grid">
+
+      <div class="journey-card corp">
+        <div class="training-type">IMReady · Corporate · Continuous Upskilling</div>
+        <h4>AI Recommendations for Upskilling & Career Mobility</h4>
+        <p>IMReady programmes (AI, tech, continuous learning) are recommended dynamically by the LMS based on an employee's current skill tags and career trajectory data from HRMS. A finance analyst is recommended an "Excel Advanced" course; an HR generalist is suggested "People Analytics". The <strong>AI recommendation engine maps learning to career progression</strong>, not just compliance.</p>
+        <div class="lms-rec"><div class="lms-rec-label">Best Platforms</div><div class="lms-tags"><span class="lms-tag lms-best">Workday/Sana</span><span class="lms-tag lms-best">Cornerstone LXP</span><span class="lms-tag lms-ok">Disprz</span></div></div>
+      </div>
+
+      <div class="journey-card product">
+        <div class="training-type">Field Visit · Product Campus Hire · 4 Days</div>
+        <h4>Geolocation Check-in + Reflection Assignments</h4>
+        <p>Campus-hire product employees do 4-day field visits to seller locations. The LMS uses <strong>geolocation check-in</strong> to confirm physical presence at each seller site. After each visit, a short reflection quiz is auto-triggered on the mobile app — <strong>"What seller problem did you observe today?"</strong> — syncing responses back to the LMS for the Product OJT coordinator to review.</p>
+        <div class="lms-rec"><div class="lms-rec-label">Best Platforms</div><div class="lms-tags"><span class="lms-tag lms-best">Disprz (Geo + QR)</span><span class="lms-tag lms-ok">Cornerstone OD</span></div></div>
+      </div>
+
+      <div class="journey-card product">
+        <div class="training-type">Product Hive / Product Meet · Monthly</div>
+        <h4>Social Learning + Discussion Forums</h4>
+        <p>Monthly Product Hive sessions on internal BI/MP tools benefit from <strong>social learning features</strong> — employees can post questions, share findings, and discuss tools in LMS-native discussion boards. This transforms a once-a-month event into a <strong>continuous knowledge-sharing thread</strong>, boosting retention of tool knowledge between sessions.</p>
+        <div class="lms-rec"><div class="lms-rec-label">Best Platforms</div><div class="lms-tags"><span class="lms-tag lms-best">Docebo</span><span class="lms-tag lms-best">Cornerstone LXP</span><span class="lms-tag lms-ok">TalentLMS</span></div></div>
+      </div>
+
+      <div class="journey-card corp">
+        <div class="training-type">MPBI Hackathons · Problem Solving · Current Employees</div>
+        <h4>Gamification + Leaderboards</h4>
+        <p>Case-based hackathons across MPBI teams benefit from <strong>LMS gamification</strong>: team points are awarded for participation, correct submissions earn badges, and a <strong>live leaderboard</strong> shows team standings. This is a strong engagement driver for technically-minded employees and could be extended to all IndiaMART employees in future phases.</p>
+        <div class="lms-rec"><div class="lms-rec-label">Best Platforms</div><div class="lms-tags"><span class="lms-tag lms-best">Docebo</span><span class="lms-tag lms-best">TalentLMS</span><span class="lms-tag lms-ok">Disprz</span></div></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ SECTION 4: VERDICT -->
+<div id="verdict" class="section">
+  <div class="section-title">Platform Verdict for IndiaMART</div>
+  <div class="section-sub">Shortlist evaluation — which platforms best match IndiaMART's unique requirements across Sales, Engineering, Product, and Corporate verticals.</div>
+
+  <div class="verdict-grid">
+
+    <div class="verdict-card" style="border-top: 3px solid #43e97b;">
+      <h4>🏆 Disprz</h4>
+      <div class="verdict-score">
+        <div class="score-bar"><div class="score-fill" style="width:95%;background:var(--full)"></div></div>
+        <span style="font-size:12px;color:var(--full);font-weight:700">15/16 · Best Fit</span>
+      </div>
+      <div class="verdict-pros"><strong>Strengths for IndiaMART</strong>
+        <ul>
+          <li>Only platform with native QR attendance tracking</li>
+          <li>Full offline sync — critical for NSD field sales</li>
+          <li>xAPI + detailed assessment analytics</li>
+          <li>Hindi language support, India-based support team</li>
+          <li>AI recommendations + gamification</li>
+          <li>Used by HDFC, Amazon India — proven at scale</li>
+        </ul>
+      </div>
+      <div class="verdict-cons"><strong>Limitations</strong>
+        <ul>
+          <li>Less mature than Cornerstone for succession planning</li>
+          <li>Vimeo/Wistia % API requires custom setup</li>
+        </ul>
+      </div>
+      <span class="verdict-tag" style="background:rgba(67,233,123,0.12);color:var(--full);border:1px solid rgba(67,233,123,0.2)">🥇 Recommended for IndiaMART</span>
+    </div>
+
+    <div class="verdict-card" style="border-top: 3px solid #6c63ff;">
+      <h4>Docebo</h4>
+      <div class="verdict-score">
+        <div class="score-bar"><div class="score-fill" style="width:88%;background:var(--accent1)"></div></div>
+        <span style="font-size:12px;color:var(--accent1);font-weight:700">14/16 · Strong Fit</span>
+      </div>
+      <div class="verdict-pros"><strong>Strengths for IndiaMART</strong>
+        <ul>
+          <li>Best-in-class video integration (Vimeo/Wistia)</li>
+          <li>Strong social learning (forums, peer sharing)</li>
+          <li>AI-powered recommendations + search</li>
+          <li>Flexible reporting with API access</li>
+          <li>Excellent UI/UX for learners</li>
+        </ul>
+      </div>
+      <div class="verdict-cons"><strong>Limitations</strong>
+        <ul>
+          <li>QR attendance requires third-party tool</li>
+          <li>Offline mode is limited</li>
+          <li>Higher cost at enterprise scale</li>
+        </ul>
+      </div>
+      <span class="verdict-tag" style="background:rgba(108,99,255,0.12);color:var(--accent1);border:1px solid rgba(108,99,255,0.2)">🥈 Strong Shortlist Option</span>
+    </div>
+
+    <div class="verdict-card" style="border-top: 3px solid #f7971e;">
+      <h4>Cornerstone OnDemand</h4>
+      <div class="verdict-score">
+        <div class="score-bar"><div class="score-fill" style="width:82%;background:var(--accent4)"></div></div>
+        <span style="font-size:12px;color:var(--accent4);font-weight:700">13/16 · Good Fit</span>
+      </div>
+      <div class="verdict-pros"><strong>Strengths for IndiaMART</strong>
+        <ul>
+          <li>Enterprise-grade compliance + audit trails</li>
+          <li>Best succession planning (ELDP, Future Leaders)</li>
+          <li>Deep role-based access for complex org structures</li>
+          <li>xAPI + advanced assessment tracking</li>
+        </ul>
+      </div>
+      <div class="verdict-cons"><strong>Limitations</strong>
+        <ul>
+          <li>UI is considered clunky by many users</li>
+          <li>No native QR attendance</li>
+          <li>Implementation timeline can be long</li>
+          <li>Higher TCO</li>
+        </ul>
+      </div>
+      <span class="verdict-tag" style="background:rgba(247,151,30,0.12);color:var(--partial);border:1px solid rgba(247,151,30,0.2)">Consider if SAP-ecosystem</span>
+    </div>
+
+    <div class="verdict-card" style="border-top: 3px solid #6c63ff;">
+      <h4>Workday Learning (Sana)</h4>
+      <div class="verdict-score">
+        <div class="score-bar"><div class="score-fill" style="width:70%;background:var(--accent1)"></div></div>
+        <span style="font-size:12px;color:var(--accent1);font-weight:700">11/16 · Partial Fit</span>
+      </div>
+      <div class="verdict-pros"><strong>Strengths for IndiaMART</strong>
+        <ul>
+          <li>Most advanced AI features — course gen, tutors</li>
+          <li>Beautiful UI, high learner adoption</li>
+          <li>AI quiz generation from uploaded content</li>
+        </ul>
+      </div>
+      <div class="verdict-cons"><strong>Limitations</strong>
+        <ul>
+          <li>No offline mode — critical gap for NSD field sales</li>
+          <li>No native QR/Geo attendance</li>
+          <li>Primarily English UI; Hindi limited</li>
+          <li>Very high cost, 300+ user minimum</li>
+          <li>Best value if already on Workday HCM</li>
+        </ul>
+      </div>
+      <span class="verdict-tag" style="background:rgba(255,83,112,0.12);color:var(--none);border:1px solid rgba(255,83,112,0.2)">Not recommended (offline gap)</span>
+    </div>
+
+    <div class="verdict-card" style="border-top: 3px solid #43e97b;">
+      <h4>SAP Litmos</h4>
+      <div class="verdict-score">
+        <div class="score-bar"><div class="score-fill" style="width:70%;background:var(--full)"></div></div>
+        <span style="font-size:12px;color:var(--full);font-weight:700">11/16 · Moderate Fit</span>
+      </div>
+      <div class="verdict-pros"><strong>Strengths for IndiaMART</strong>
+        <ul>
+          <li>xAPI + SCORM support, compliance-strong</li>
+          <li>Hindi language support</li>
+          <li>Good ILT management for offline sessions</li>
+          <li>Fast deployment timeline</li>
+        </ul>
+      </div>
+      <div class="verdict-cons"><strong>Limitations</strong>
+        <ul>
+          <li>Limited AI features vs peers</li>
+          <li>Authoring tools less flexible</li>
+          <li>Partial offline capability</li>
+        </ul>
+      </div>
+      <span class="verdict-tag" style="background:rgba(67,233,123,0.12);color:var(--full);border:1px solid rgba(67,233,123,0.2)">Good for compliance-heavy teams</span>
+    </div>
+
+    <div class="verdict-card" style="border-top: 3px solid #ff5370;">
+      <h4>Learnyst / Graphy</h4>
+      <div class="verdict-score">
+        <div class="score-bar"><div class="score-fill" style="width:25%;background:var(--none)"></div></div>
+        <span style="font-size:12px;color:var(--none);font-weight:700">4/16 · Not Recommended</span>
+      </div>
+      <div class="verdict-pros"><strong>Where they work</strong>
+        <ul>
+          <li>Simple course creation for ed-tech creators</li>
+          <li>Good UI for external learners / students</li>
+        </ul>
+      </div>
+      <div class="verdict-cons"><strong>Critical Gaps for IndiaMART</strong>
+        <ul>
+          <li>No enterprise role-based access control</li>
+          <li>No xAPI support</li>
+          <li>No offline sync</li>
+          <li>No QR/Geo attendance</li>
+          <li>No advanced reporting or API</li>
+          <li>Not built for internal enterprise L&D</li>
+        </ul>
+      </div>
+      <span class="verdict-tag" style="background:rgba(255,83,112,0.12);color:var(--none);border:1px solid rgba(255,83,112,0.2)">✗ Eliminate from shortlist</span>
+    </div>
+
+  </div>
+
+  <div style="margin-top:32px;padding:24px;background:var(--card);border:1px solid var(--border);border-radius:12px;border-left:3px solid var(--accent1);">
+    <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:10px;">💡 Final Recommendation for IndiaMART</div>
+    <p style="font-size:13px;color:var(--muted);line-height:1.8;"><strong style="color:var(--text)">Primary choice: Disprz</strong> — the only platform in this list that natively addresses IndiaMART's most unique requirements: QR-code attendance for offline sessions (Shubharambh, FTM, WSB meets), offline sync for NSD field sales OJT, India-based support and Hindi language UI, and proven deployment at Indian enterprise scale. Its LMS+LXP combination also handles both structured training journeys and on-demand personalised upskilling.<br><br>
+    <strong style="color:var(--text)">Secondary shortlist: Docebo</strong> — if the priority is social learning, best-in-class video integration, and a premium learner experience. Best suited for MPBI (Engineering, Product) teams who are desk-based and require richer content experiences. Consider a <strong style="color:var(--text)">blended deployment: Disprz for Sales/Field + Docebo for MPBI/Corporate</strong> or negotiate a single-vendor Disprz enterprise deal that covers both.<br><br>
+    <strong style="color:var(--text)">Eliminate immediately: Learnyst, Graphy</strong> — these are not enterprise LMS platforms and cannot meet any of IndiaMART's core requirements.</p>
+  </div>
+</div>
+
+<!-- ============================================================ SECTION 5: AI-NATIVE PLATFORMS -->
+<div id="ai-native" class="section">
+  <div class="section-title">AI-Native Learning Platforms</div>
+  <div class="section-sub">Platforms built from the ground up with AI at the core — not retrofitted. Focused on Sana Labs and other pioneers reshaping enterprise L&D.</div>
+
+  <!-- SANA LABS HERO -->
+  <div style="background:linear-gradient(135deg,#12142b,#1a1040);border:1px solid rgba(108,99,255,0.4);border-radius:16px;padding:28px;margin-bottom:28px;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:radial-gradient(circle,rgba(108,99,255,0.2),transparent 70%);pointer-events:none"></div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+      <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#6c63ff,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🧠</div>
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--text)">Sana Labs <span style="font-size:12px;padding:3px 10px;border-radius:10px;background:rgba(108,99,255,0.15);color:var(--accent1);border:1px solid rgba(108,99,255,0.3);vertical-align:middle;margin-left:8px;">Now part of Workday</span></div>
+        <div style="font-size:12px;color:var(--muted);margin-top:3px;">Founded 2016 · Stockholm, London, New York · AI-First Architecture · ~300 employees</div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--muted);line-height:1.8;max-width:800px;">Sana Labs pioneered AI-native learning — building AI into the platform's DNA rather than bolting it on. Their flagship product <strong style="color:var(--text)">Sana Learn</strong> combines LMS, LXP, authoring tool, and virtual classroom into a single AI-first experience. In 2025, Sana was acquired by Workday, supercharging its enterprise integration capabilities. It is now marketed under Workday Learning with Sana's AI stack powering the experience.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:20px;">
+      <div style="background:rgba(67,233,123,0.08);border:1px solid rgba(67,233,123,0.2);border-radius:10px;padding:14px;text-align:center;">
+        <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--full)">275%</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px;">Increase in active users (Polestar)</div>
+      </div>
+      <div style="background:rgba(108,99,255,0.08);border:1px solid rgba(108,99,255,0.2);border-radius:10px;padding:14px;text-align:center;">
+        <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--accent1)">15hrs</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px;">Saved per course creation cycle</div>
+      </div>
+      <div style="background:rgba(247,151,30,0.08);border:1px solid rgba(247,151,30,0.2);border-radius:10px;padding:14px;text-align:center;">
+        <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--partial)">90%</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px;">Content creation time reduction via AI</div>
+      </div>
+      <div style="background:rgba(67,233,123,0.08);border:1px solid rgba(67,233,123,0.2);border-radius:10px;padding:14px;text-align:center;">
+        <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--full)">35%</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px;">Compliance training completion boost</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SANA AI FEATURES -->
+  <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px;color:var(--text)">🔬 What Makes Sana Labs Truly AI-Native</div>
+  <div class="exp-grid" style="margin-bottom:32px;">
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(108,99,255,0.15);">🤖</div>
+        <div><div class="exp-card-title">AI Personal Tutor for Every Learner</div><div class="exp-card-sub">Not a chatbot — a context-aware learning companion</div></div>
+      </div>
+      <div class="exp-body">Every learner in Sana gets a <strong>1:1 AI tutor</strong> that knows their role, learning history, and skill gaps. It answers questions, explains concepts in different ways, generates practice questions on demand, and adapts in real-time. Unlike most platforms that bolt on a generic AI assistant, Sana's tutor is trained on the organization's own content library.</div>
+    </div>
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(67,233,123,0.15);">⚡</div>
+        <div><div class="exp-card-title">PDF-to-Course in Minutes</div><div class="exp-card-sub">AI does 90% of the authoring work</div></div>
+      </div>
+      <div class="exp-body">Upload any PDF, document, or slide deck and Sana's AI instantly generates a complete interactive course with quizzes, key takeaways, images, and assessment questions. Polestar cut course creation from days to <strong>3 hours</strong>. Flügger built <strong>450+ courses in 6 months</strong> using this capability alone. This is generative AI used natively — not as an add-on.</div>
+    </div>
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(255,101,132,0.15);">🔍</div>
+        <div><div class="exp-card-title">Universal AI Search ("Just-in-Time Learning")</div><div class="exp-card-sub">Semantic search across ALL organizational knowledge</div></div>
+      </div>
+      <div class="exp-body">Sana's AI search doesn't just search course titles — it understands context and intent. Ask "how do I handle a pricing objection in a demo?" and Sana surfaces the exact video timestamp, relevant slide, and related quiz. This makes learning <strong>on-demand and workflow-embedded</strong>, not a scheduled event. A sales rep can get answers in 30 seconds instead of finding a manager.</div>
+    </div>
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(247,151,30,0.15);">📊</div>
+        <div><div class="exp-card-title">Real-Time AI Analytics Dashboards</div><div class="exp-card-sub">Insights generated in seconds, not reports in days</div></div>
+      </div>
+      <div class="exp-body">Managers and L&D leaders get <strong>auto-generated insights</strong> — "3 people on your team haven't completed the compliance module due Friday" or "learners who completed Module 5 show 40% better retention in assessments." No manual report building. AI surfaces patterns proactively, allowing L&D to act before problems escalate.</div>
+    </div>
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(108,99,255,0.15);">🌐</div>
+        <div><div class="exp-card-title">AI-Powered Instant Localization</div><div class="exp-card-sub">Global teams, local language, same quality</div></div>
+      </div>
+      <div class="exp-body">Sana's AI localizes content across languages with a single click. Polestar teams in 18 countries now create and translate content in-house, saving massive vendor costs. The AI maintains <strong>contextual accuracy</strong>, not just literal translation — adapting idioms and examples for local relevance. This is a core AI-native feature, not a third-party plugin.</div>
+    </div>
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <div class="exp-icon" style="background:rgba(67,233,123,0.15);">🎯</div>
+        <div><div class="exp-card-title">Adaptive Spaced Repetition</div><div class="exp-card-sub">AI fights the forgetting curve automatically</div></div>
+      </div>
+      <div class="exp-body">Sana's AI schedules review nudges based on individual memory science — surfaces content <strong>at the optimal forgetting moment</strong> for each learner. No admin configuration needed. The system learns from quiz performance and engagement signals to determine when each person needs reinforcement. A true cognitive science application, not a basic reminder system.</div>
+    </div>
+  </div>
+
+  <!-- COMPARISON: AI-NATIVE VS TRADITIONAL -->
+  <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px;color:var(--text)">⚖️ AI-Native vs. Traditional LMS: What's the Difference?</div>
+  <div style="overflow-x:auto;border-radius:12px;border:1px solid var(--border);margin-bottom:32px;">
+  <table style="width:100%;border-collapse:collapse;min-width:700px;">
+    <thead>
+      <tr style="background:#1b1e35;">
+        <th style="padding:14px 16px;text-align:left;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);">Dimension</th>
+        <th style="padding:14px 12px;text-align:center;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:#6c63ff;border-bottom:1px solid var(--border);">AI-Native (Sana)</th>
+        <th style="padding:14px 12px;text-align:center;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);">Traditional LMS (Legacy)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:12px 16px;font-size:13px;color:var(--text);">Content Creation</td>
+        <td style="padding:12px;text-align:center;font-size:12px;color:var(--full);">Upload PDF → Course in minutes, AI adds quizzes, images, takeaways</td>
+        <td style="padding:12px;text-align:center;font-size:12px;color:var(--muted);">Manual authoring in external tools, then upload SCORM packages</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.01);">
+        <td style="padding:12px 16px;font-size:13px;color:var(--text);">Personalization</td>
+        <td style="padding:12px;text-align:center;font-size:12px;color:var(--full);">AI infers individual knowledge gaps, adapts in real-time per learner</td>
+        <td style="padding:12px;text-align:center;font-size:12px;color:var(--muted);">Admin manually assigns courses to roles/groups — same content for all</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:12px 16px;font-size:13px;color:var(--text);">Search Experience</td>
+        <td style="padding:12px;text-align:center;font-size:12px;color:var(--full);">Semantic search — finds answers within videos, PDFs, at exact timestamps</td>
+        <td style="padding:12px;text-align:center;font-size:12px;color:var(--muted);">Keyword-based search of course titles and descriptions only</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.01);">
+        <td style="padding:12px 16px;font-size:13px;color:var(--text);">Learning Support</td>
+        <td style="padding:12px;text-align:center;font-size:12px;color:var(--full);">AI tutor available 24/7, answers questions using company knowledge</td>
+        <td style="padding:12px;text-align:center;font-size:12px;color:var(--muted);">Discussion forums; learner must wait for instructor response</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:12px 16px;font-size:13px;color:var(--text);">Analytics</td>
+        <td style="padding:12px;text-align:center;font-size:12px;color:var(--full);">AI proactively generates insights; predicts at-risk learners before failure</td>
+        <td style="padding:12px;text-align:center;font-size:12px;color:var(--muted);">Completion reports and pass/fail data; reactive analysis by HR</td>
+      </tr>
+      <tr>
+        <td style="padding:12px 16px;font-size:13px;color:var(--text);">Admin Burden</td>
+        <td style="padding:12px;text-align:center;font-size:12px;color:var(--full);">Automated enrollment, reminder nudges, compliance tagging — hands-off</td>
+        <td style="padding:12px;text-align:center;font-size:12px;color:var(--muted);">Manual enrollment, manual reminders, periodic report pulls</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <!-- OTHER AI-NATIVE COMPANIES SECTION -->
+  <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px;color:var(--text)">🏢 Other Leading AI-Native Learning Companies (5,000–10,000 Employee Clients)</div>
+  <p style="color:var(--muted);font-size:13px;margin-bottom:24px;">These are companies that <em>build</em> AI-native learning platforms and typically deploy to mid-large enterprise clients in the 5K–10K+ headcount range.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px;margin-bottom:32px;">
+
+    <!-- 360Learning -->
+    <div class="exp-card" style="border-top:3px solid #6c63ff;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:800;">360Learning</div>
+          <div style="font-size:11px;color:var(--muted);">Paris + NY · ~500 employees · $240M raised</div>
+        </div>
+        <span style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;background:rgba(108,99,255,0.12);color:var(--accent1);border:1px solid rgba(108,99,255,0.2);">Collaborative AI</span>
+      </div>
+      <div class="exp-body">
+        <strong>Philosophy:</strong> AI empowers subject matter experts (SMEs) to create content — not just L&D professionals. Their model of "L&D-controlled prompts" lets anyone become a trainer while maintaining quality standards.<br><br>
+        <strong>Key AI Features:</strong> AI-assisted collaborative authoring, automated course recommendations, skills gap detection, 80% faster content creation reported by clients.<br><br>
+        <strong>What employees do there:</strong> ~60% are engineers building the platform, ~25% are in sales/CS serving enterprise clients (Schneider Electric, LVMH, Air Liquide), ~15% in L&D/product.
+        <div class="platform-pills">
+          <span class="p-full">✓ Collaborative AI</span>
+          <span class="p-full">✓ Skills Intelligence</span>
+          <span class="p-partial">~ Offline Mode</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Degreed -->
+    <div class="exp-card" style="border-top:3px solid #43e97b;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:800;">Degreed</div>
+          <div style="font-size:11px;color:var(--muted);">San Francisco · ~700 employees · $500M+ raised</div>
+        </div>
+        <span style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;background:rgba(67,233,123,0.12);color:var(--full);border:1px solid rgba(67,233,123,0.2);">Skills OS</span>
+      </div>
+      <div class="exp-body">
+        <strong>Philosophy:</strong> The "Skills Operating System" — AI maps every learning activity to organizational skill needs. Degreed tracks ALL learning (LinkedIn, YouTube, books, conferences) not just LMS courses.<br><br>
+        <strong>Key AI Features:</strong> AI skill inference engine, learning pathway recommendations, skills-to-jobs mapping, aggregates 50+ content providers into one AI-curated feed.<br><br>
+        <strong>Is AI the main worker or background?</strong> AI is a <strong>background artist</strong> at Degreed — it surfaces and curates intelligently, but humans still author strategy and content.
+        <div class="platform-pills">
+          <span class="p-full">✓ Skills Mapping</span>
+          <span class="p-full">✓ Content Aggregation</span>
+          <span class="p-partial">~ Content Authoring</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Learnerbly -->
+    <div class="exp-card" style="border-top:3px solid #f7971e;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:800;">Learnerbly</div>
+          <div style="font-size:11px;color:var(--muted);">London · ~100 employees · Series A funded</div>
+        </div>
+        <span style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;background:rgba(247,151,30,0.12);color:var(--partial);border:1px solid rgba(247,151,30,0.2);">Self-Directed AI</span>
+      </div>
+      <div class="exp-body">
+        <strong>Philosophy:</strong> Self-directed learning powered by AI budget allocation. Employees get a learning budget and AI recommends how to spend it across 250+ providers (books, courses, coaching).<br><br>
+        <strong>Key AI Features:</strong> AI-driven personalized learning recommendations, spend analytics, skills gap identification linked to career paths.<br><br>
+        <strong>Role vs. Scale:</strong> AI is the <strong>central recommender</strong> but humans control the budget and curate approved providers.
+        <div class="platform-pills">
+          <span class="p-full">✓ Budget Intelligence</span>
+          <span class="p-partial">~ Custom Content</span>
+          <span class="p-none">✗ Offline Mode</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW AI ROLES AT THESE COMPANIES -->
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:24px;">
+    <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:16px;">🤔 Is AI the "Main Employee" or "Background Artist" at These Companies?</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--accent1);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">🎭 AI as Background Artist</div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.8;">At most AI-native LMS companies, <strong style="color:var(--text)">AI automates and augments</strong> but humans still perform the high-judgment work. L&D strategy, enterprise sales, implementation consulting, customer success — all require human expertise. Engineers (50–60% of staff) build and train the AI models. AI handles the repetitive: content tagging, quiz generation, scheduling, reminder nudges, and analytics summarization.</p>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--full);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">🌟 Where AI IS the Main Worker</div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.8;">In the <strong style="color:var(--text)">product itself</strong>, AI is the primary experience layer. Sana's personal tutor replaces human instructors for on-demand Q&A. Degreed's AI curator replaces manual L&D curation. 360Learning's AI authoring assistant replaces instructional designers for initial drafts. The ratio: <strong style="color:var(--text)">~30–40% of tasks formerly done by humans are now primarily AI-executed</strong> within these platforms.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SANA VS INDIAMART GAPS -->
+  <div style="background:rgba(255,83,112,0.06);border:1px solid rgba(255,83,112,0.2);border-radius:12px;padding:20px;">
+    <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--none);margin-bottom:12px;">⚠️ Why Sana Labs Isn't Right for IndiaMART (Despite Being the Most Advanced AI Platform)</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;">
+      <div style="font-size:12px;color:var(--muted);"><span style="color:var(--none);">✗</span> <strong style="color:var(--text);">No offline mode</strong> — critical for NSD field sales in Tier 2/3 cities with poor connectivity</div>
+      <div style="font-size:12px;color:var(--muted);"><span style="color:var(--none);">✗</span> <strong style="color:var(--text);">No native QR/Geo attendance</strong> — can't handle Shubharambh or offline ILT sessions</div>
+      <div style="font-size:12px;color:var(--muted);"><span style="color:var(--none);">✗</span> <strong style="color:var(--text);">Limited Hindi UI</strong> — primarily English; IndiaMART's frontline staff need Hindi-first experience</div>
+      <div style="font-size:12px;color:var(--muted);"><span style="color:var(--none);">✗</span> <strong style="color:var(--text);">Very high cost</strong> — €7,200/yr minimum for Core plan, not India-market pricing</div>
+      <div style="font-size:12px;color:var(--muted);"><span style="color:var(--none);">✗</span> <strong style="color:var(--text);">No India support team</strong> — timezone and escalation challenges for a 5,000+ person deployment</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ SECTION 6: CYPHER & DISPRZ DEEP DIVE -->
+<div id="cypher-disprz" class="section">
+  <div class="section-title">CYPHER Learning &amp; Disprz: Deep Dive</div>
+  <div class="section-sub">A detailed comparison of two platforms most relevant to IndiaMART's context — with job role analysis, AI role assessment, and feature gap mapping for 5,000–10,000 employee organizations.</div>
+
+  <!-- TWO COLUMN HEADERS -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:32px;">
+    <!-- CYPHER Card -->
+    <div style="background:linear-gradient(135deg,#12142b,#1a1c30);border:1px solid rgba(67,233,123,0.3);border-radius:14px;padding:24px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+        <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#43e97b,#38f9d7);display:flex;align-items:center;justify-content:center;font-size:20px;">⚙️</div>
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--text)">CYPHER Learning</div>
+          <div style="font-size:11px;color:var(--muted);">Plano, TX (Global) · ~141 employees · PE-backed (2021)</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:14px;">An all-in-one LMS/LXP platform offering MATRIX (Business), NEO (Education), and INDIE (Entrepreneurs). Their AI engine <strong style="color:var(--text)">CYPHER AI 360</strong> automates course creation, skills mapping, gamification, and assessment generation. Clients include McDonald's, Hyundai, Coca-Cola, and Microsoft.</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
+        <span style="font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(67,233,123,0.1);color:var(--full);border:1px solid rgba(67,233,123,0.2);">AI Authoring (AI 360)</span>
+        <span style="font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(67,233,123,0.1);color:var(--full);border:1px solid rgba(67,233,123,0.2);">50+ Languages</span>
+        <span style="font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(67,233,123,0.1);color:var(--full);border:1px solid rgba(67,233,123,0.2);">Gamification</span>
+        <span style="font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(247,151,30,0.1);color:var(--partial);border:1px solid rgba(247,151,30,0.2);">Partial Offline</span>
+        <span style="font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(255,83,112,0.1);color:var(--none);border:1px solid rgba(255,83,112,0.2);">No QR Attendance</span>
+      </div>
+    </div>
+    <!-- Disprz Card -->
+    <div style="background:linear-gradient(135deg,#12142b,#1a1c30);border:1px solid rgba(108,99,255,0.3);border-radius:14px;padding:24px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+        <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#6c63ff,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:20px;">🇮🇳</div>
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--text)">Disprz</div>
+          <div style="font-size:11px;color:var(--muted);">India (Chennai/Bengaluru) · ~200–500 employees · Series B funded</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:14px;">India-first LMS+LXP combining structured learning management with AI-powered skills development. Deeply embedded in Indian enterprise: Amazon, Deloitte, Isuzu, IndianOil, Cipla. Recognized in Gartner 2024 Market Guide. Specializes in frontline workforce training with <strong style="color:var(--text)">mobile-first, offline-capable</strong> delivery.</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
+        <span style="font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(67,233,123,0.1);color:var(--full);border:1px solid rgba(67,233,123,0.2);">QR Attendance ✓</span>
+        <span style="font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(67,233,123,0.1);color:var(--full);border:1px solid rgba(67,233,123,0.2);">Offline Sync ✓</span>
+        <span style="font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(67,233,123,0.1);color:var(--full);border:1px solid rgba(67,233,123,0.2);">Hindi UI ✓</span>
+        <span style="font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(67,233,123,0.1);color:var(--full);border:1px solid rgba(67,233,123,0.2);">GenAI Authoring</span>
+        <span style="font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(67,233,123,0.1);color:var(--full);border:1px solid rgba(67,233,123,0.2);">India Support Team</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHO WORKS AT THESE COMPANIES -->
+  <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px;color:var(--text)">👥 Who Works at These Companies? Job Roles &amp; AI Impact</div>
+  <div style="overflow-x:auto;border-radius:12px;border:1px solid var(--border);margin-bottom:32px;">
+  <table style="width:100%;border-collapse:collapse;min-width:900px;">
+    <thead>
+      <tr style="background:#1b1e35;">
+        <th style="padding:14px 16px;text-align:left;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);">Job Role</th>
+        <th style="padding:14px 12px;text-align:left;font-family:'Syne',sans-serif;font-size:11px;color:var(--full);font-weight:700;letter-spacing:0.8px;text-transform:uppercase;border-bottom:1px solid var(--border);">What They Do</th>
+        <th style="padding:14px 12px;text-align:left;font-family:'Syne',sans-serif;font-size:11px;color:var(--accent1);font-weight:700;letter-spacing:0.8px;text-transform:uppercase;border-bottom:1px solid var(--border);">How AI Helps Them</th>
+        <th style="padding:14px 12px;text-align:center;font-family:'Syne',sans-serif;font-size:11px;color:var(--partial);font-weight:700;letter-spacing:0.8px;text-transform:uppercase;border-bottom:1px solid var(--border);">AI Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:12px 16px;font-size:13px;color:var(--text);font-weight:600;">L&D / Instructional Designer</td>
+        <td style="padding:12px;font-size:12px;color:var(--muted);">Designs learning programs, creates courses, maps skills to business outcomes, evaluates training effectiveness</td>
+        <td style="padding:12px;font-size:12px;color:var(--muted);">AI generates course outlines in minutes from a prompt; auto-creates quizzes, suggests skill tags; cuts creation time 70–80%</td>
+        <td style="padding:12px;text-align:center;"><span style="font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(247,151,30,0.12);color:var(--partial);border:1px solid rgba(247,151,30,0.2);">Assistant</span></td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.01);">
+        <td style="padding:12px 16px;font-size:13px;color:var(--text);font-weight:600;">Platform Engineer / ML Engineer</td>
+        <td style="padding:12px;font-size:12px;color:var(--muted);">Builds recommendation engines, trains AI models, maintains NLP pipelines, develops adaptive learning algorithms</td>
+        <td style="padding:12px;font-size:12px;color:var(--muted);">Uses AI coding assistants (GitHub Copilot) for development. Responsible for building the AI that everyone else uses</td>
+        <td style="padding:12px;text-align:center;"><span style="font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(108,99,255,0.12);color:var(--accent1);border:1px solid rgba(108,99,255,0.2);">Builder</span></td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:12px 16px;font-size:13px;color:var(--text);font-weight:600;">Customer Success Manager</td>
+        <td style="padding:12px;font-size:12px;color:var(--muted);">Onboards enterprise clients (5K–50K employees), advises on learning strategy, ensures adoption and ROI</td>
+        <td style="padding:12px;font-size:12px;color:var(--muted);">AI provides client health dashboards, usage anomaly alerts, and proactive churn signals. Still human-led relationships</td>
+        <td style="padding:12px;text-align:center;"><span style="font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(67,233,123,0.12);color:var(--full);border:1px solid rgba(67,233,123,0.2);">Augmented</span></td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.01);">
+        <td style="padding:12px 16px;font-size:13px;color:var(--text);font-weight:600;">Sales / Account Executive</td>
+        <td style="padding:12px;font-size:12px;color:var(--muted);">Sells enterprise LMS deals ($50K–$500K ARR), manages 6–18 month sales cycles with Fortune 500 L&D teams</td>
+        <td style="padding:12px;font-size:12px;color:var(--muted);">AI tools surface ROI data and competitive battle cards; CRM AI predicts deal close probability; still fundamentally human relationship selling</td>
+        <td style="padding:12px;text-align:center;"><span style="font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(247,151,30,0.12);color:var(--partial);border:1px solid rgba(247,151,30,0.2);">Assisted</span></td>
+      </tr>
+      <tr>
+        <td style="padding:12px 16px;font-size:13px;color:var(--text);font-weight:600;">Data / Analytics Analyst</td>
+        <td style="padding:12px;font-size:12px;color:var(--muted);">Analyzes learner behavior data, builds dashboards for client reporting, identifies skill trends across platform usage</td>
+        <td style="padding:12px;font-size:12px;color:var(--muted);">AI auto-generates standard reports; analyst focuses on anomaly investigation and translating data into L&D strategy. AI handles ~60% of routine analysis</td>
+        <td style="padding:12px;text-align:center;"><span style="font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(67,233,123,0.12);color:var(--full);border:1px solid rgba(67,233,123,0.2);">Augmented</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <!-- FEATURE COMPARISON TABLE CYPHER VS DISPRZ -->
+  <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px;color:var(--text)">📊 CYPHER Learning vs. Disprz: Feature Mapping for 5K–10K Orgs</div>
+  <div style="overflow-x:auto;border-radius:12px;border:1px solid var(--border);margin-bottom:32px;">
+  <table style="width:100%;border-collapse:collapse;min-width:800px;">
+    <thead>
+      <tr style="background:#1b1e35;">
+        <th style="padding:14px 16px;text-align:left;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);min-width:220px;">Feature Area</th>
+        <th style="padding:14px 12px;text-align:center;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:#43e97b;border-bottom:1px solid var(--border);">CYPHER Learning</th>
+        <th style="padding:14px 12px;text-align:center;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:#6c63ff;border-bottom:1px solid var(--border);">Disprz</th>
+        <th style="padding:14px 12px;text-align:left;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);">Key Differentiator</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:12px 16px;font-size:13px;color:var(--text);">AI-Powered Course Authoring</td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-full">✓</span></td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-full">✓</span></td>
+        <td style="padding:12px;font-size:12px;color:var(--muted);">CYPHER AI 360 uses GenAI verification for accuracy; Disprz GenAI authoring is SCORM/xAPI ready</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.01);">
+        <td style="padding:12px 16px;font-size:13px;color:var(--text);">Skills-Based Learning Paths</td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-full">✓</span></td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-full">✓</span></td>
+        <td style="padding:12px;font-size:12px;color:var(--muted);">CYPHER's competency-based mastery is stronger for academic/certification; Disprz links paths directly to business KPIs (sales growth)</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:12px 16px;font-size:13px;color:var(--text);">Mobile-First + Offline Mode</td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-partial">~</span></td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-full">✓</span></td>
+        <td style="padding:12px;font-size:12px;color:var(--muted);"><strong style="color:var(--accent1)">Disprz wins</strong> — full offline sync for field workers. CYPHER is mobile-responsive but not truly offline-capable</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.01);">
+        <td style="padding:12px 16px;font-size:13px;color:var(--text);">QR / Geo Attendance Tracking</td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-none">✗</span></td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-full">✓</span></td>
+        <td style="padding:12px;font-size:12px;color:var(--muted);"><strong style="color:var(--accent1)">Disprz wins</strong> — native QR code attendance for ILT sessions. CYPHER has no equivalent feature</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:12px 16px;font-size:13px;color:var(--text);">Multilingual Support (incl. Hindi)</td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-full">✓</span></td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-full">✓</span></td>
+        <td style="padding:12px;font-size:12px;color:var(--muted);">CYPHER supports 50+ languages including Hindi; Disprz has Hindi-first design with regional language support</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.01);">
+        <td style="padding:12px 16px;font-size:13px;color:var(--text);">Gamification (Badges, Leaderboards)</td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-full">✓</span></td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-full">✓</span></td>
+        <td style="padding:12px;font-size:12px;color:var(--muted);"><strong style="color:#43e97b)">CYPHER wins</strong> — richer gamification with mastery levels, digital badges, points economy, and custom rewards</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:12px 16px;font-size:13px;color:var(--text);">AI Accuracy Verification (GenAI)</td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-full">✓</span></td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-partial">~</span></td>
+        <td style="padding:12px;font-size:12px;color:var(--muted);"><strong style="color:#43e97b)">CYPHER wins</strong> — industry-first "AI Crosscheck" tool verifies AI-generated content for factual accuracy before publishing</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.01);">
+        <td style="padding:12px 16px;font-size:13px;color:var(--text);">India-Based Customer Support</td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-none">✗</span></td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-full">✓</span></td>
+        <td style="padding:12px;font-size:12px;color:var(--muted);"><strong style="color:var(--accent1)">Disprz wins</strong> — local support team, IST timezone, understands Indian enterprise context</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:12px 16px;font-size:13px;color:var(--text);">HRIS / HRMS Integration</td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-full">✓</span></td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-full">✓</span></td>
+        <td style="padding:12px;font-size:12px;color:var(--muted);">CYPHER integrates via 1,000+ connectors (Zapier, API); Disprz integrates with Oracle HCM, SAP, local HRMS via SAML 2.0</td>
+      </tr>
+      <tr>
+        <td style="padding:12px 16px;font-size:13px;color:var(--text);">Pricing for Indian Enterprise Scale</td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-partial">~</span></td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-full">✓</span></td>
+        <td style="padding:12px;font-size:12px;color:var(--muted);"><strong style="color:var(--accent1)">Disprz wins</strong> — India-market pricing designed for 5K–50K user deployments; CYPHER is USD-priced for mid-size global orgs</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <!-- FEATURES CYPHER HAS THAT DISPRZ DOESN'T -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:32px;">
+    <div style="background:rgba(67,233,123,0.05);border:1px solid rgba(67,233,123,0.2);border-radius:12px;padding:20px;">
+      <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:#43e97b;margin-bottom:14px;">🟢 Features CYPHER Has That Disprz Doesn't (or does weakly)</div>
+      <ul style="list-style:none;font-size:12px;color:var(--muted);line-height:2;">
+        <li>✓ <strong style="color:var(--text);">AI Crosscheck</strong> — verifies AI-generated content for factual accuracy (industry-first)</li>
+        <li>✓ <strong style="color:var(--text);">CYPHER Agent: Practice</strong> — AI role-play and scenario simulation for learners</li>
+        <li>✓ <strong style="color:var(--text);">Richer Gamification Engine</strong> — custom rewards, mastery levels, points economy</li>
+        <li>✓ <strong style="color:var(--text);">E-Commerce & Commercial Training</strong> — built-in selling of courses externally</li>
+        <li>✓ <strong style="color:var(--text);">White-Label Branding</strong> — fully customizable portal for extended enterprise</li>
+        <li>✓ <strong style="color:var(--text);">Broader Integration Ecosystem</strong> — 1,000+ app connectors vs Disprz's curated list</li>
+        <li>✓ <strong style="color:var(--text);">Academic/Certification Track</strong> — designed for both corporate and higher ed contexts</li>
+      </ul>
+    </div>
+    <div style="background:rgba(108,99,255,0.05);border:1px solid rgba(108,99,255,0.2);border-radius:12px;padding:20px;">
+      <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--accent1);margin-bottom:14px;">🟣 Features Disprz Has That CYPHER Doesn't (or does weakly)</div>
+      <ul style="list-style:none;font-size:12px;color:var(--muted);line-height:2;">
+        <li>✓ <strong style="color:var(--text);">QR Code & Geo Attendance</strong> — native ILT check-in for offline sessions</li>
+        <li>✓ <strong style="color:var(--text);">Full Offline Sync</strong> — content downloaded for zero-connectivity environments</li>
+        <li>✓ <strong style="color:var(--text);">Hindi-First Mobile UI</strong> — regional language support designed for Bharat</li>
+        <li>✓ <strong style="color:var(--text);">70-20-10 Model Tracking</strong> — tracks OJT and social learning, not just formal courses</li>
+        <li>✓ <strong style="color:var(--text);">AI Skills Gap Analysis</strong> — maps individual gaps to business KPIs (not just learning goals)</li>
+        <li>✓ <strong style="color:var(--text);">India Enterprise Experience</strong> — proven at IndianOil, Cipla, Amazon India deployments</li>
+        <li>✓ <strong style="color:var(--text);">India-Based Support & Implementation</strong> — IST timezone, local CS team</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- WHAT EMPLOYEES AT 5-10K ORG DO WITH THESE PLATFORMS -->
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;">
+    <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:16px;">🏭 What Employees at 5,000–10,000 Person Organizations Actually Do With These Platforms</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
+      <div style="border-left:3px solid #ff6584;padding-left:14px;">
+        <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:8px;">📞 Sales / Field Rep (NSD)</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.8;"><strong style="color:var(--text)">Uses CYPHER/Disprz on mobile</strong> to complete product knowledge modules before a client visit, check their certification status, and review competitive battle cards. With Disprz offline sync, they can download this morning's module while on WiFi, complete it in the field, and sync results when back online.</div>
+      </div>
+      <div style="border-left:3px solid #6c63ff;padding-left:14px;">
+        <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:8px;">💻 Tech / Engineering Team</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.8;"><strong style="color:var(--text)">Uses CYPHER's AI-powered skill mapping</strong> to auto-enroll in courses aligned to their current role level and planned career path. AI recommends the next certification (AWS, system design) based on role trajectory and skill gap analysis. CYPHER's scenario-based Practice tool lets them rehearse architecture discussions.</div>
+      </div>
+      <div style="border-left:3px solid #43e97b;padding-left:14px;">
+        <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:8px;">🏢 Corporate / HR / Finance</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.8;"><strong style="color:var(--text)">Compliance and mandatory training</strong> is the primary use case. Both platforms auto-assign policy updates, POSH training, and onboarding modules. Managers get team completion dashboards. AI reminds overdue learners. CYPHER's automation engine handles 25+ automated actions for compliance workflows.</div>
+      </div>
+      <div style="border-left:3px solid #f7971e;padding-left:14px;">
+        <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:8px;">📦 Operations / Warehouse</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.8;"><strong style="color:var(--text)">Disprz excels here</strong> — with short microlearning modules (2–5 min), vernacular language content, and offline capability for warehouse/logistics staff. QR attendance at the shift briefing area auto-records attendance for the safety training session. Operations heads get a live dashboard of team readiness scores.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ SECTION 7: INDIAMART COMPETITORS -->
+<div id="competitors" class="section">
+  <div class="section-title">IndiaMART Competitors: LMS &amp; AI Intelligence Report</div>
+  <div class="section-sub">Direct and indirect competitors of IndiaMART in the B2B/e-commerce domain with ~5,000–10,000 employees. Analysis of their LMS usage, AI adoption, employee roles, and L&D practices.</div>
+
+  <!-- COMPETITOR OVERVIEW TABLE -->
+  <div style="overflow-x:auto;border-radius:12px;border:1px solid var(--border);margin-bottom:32px;">
+  <table style="width:100%;border-collapse:collapse;min-width:900px;">
+    <thead>
+      <tr style="background:#1b1e35;">
+        <th style="padding:14px 16px;text-align:left;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);">Company</th>
+        <th style="padding:14px 12px;text-align:center;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);">Type</th>
+        <th style="padding:14px 12px;text-align:center;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);">Employees</th>
+        <th style="padding:14px 12px;text-align:center;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);">LMS / L&D Stack</th>
+        <th style="padding:14px 12px;text-align:center;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);">AI Integration Level</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:12px 16px;"><div style="font-size:13px;font-weight:700;color:var(--text);">Justdial (JD Mart)</div><div style="font-size:11px;color:var(--muted);">India · Mumbai · Acquired by Reliance</div></td>
+        <td style="padding:12px;text-align:center;"><span style="font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(255,101,132,0.1);color:#ff6584;border:1px solid rgba(255,101,132,0.2);">Direct 🇮🇳</span></td>
+        <td style="padding:12px;text-align:center;font-size:13px;color:var(--text);font-weight:700;">~14,500</td>
+        <td style="padding:12px;text-align:center;font-size:12px;color:var(--muted);">Likely SAP SuccessFactors or Oracle HCM (Reliance ecosystem). Internal sales training on custom apps.</td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-partial">~</span></td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.01);">
+        <td style="padding:12px 16px;"><div style="font-size:13px;font-weight:700;color:var(--text);">Shopify</div><div style="font-size:11px;color:var(--muted);">Canada (Global) · NASDAQ-listed</div></td>
+        <td style="padding:12px;text-align:center;"><span style="font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(247,151,30,0.1);color:var(--partial);border:1px solid rgba(247,151,30,0.2);">Indirect</span></td>
+        <td style="padding:12px;text-align:center;font-size:13px;color:var(--text);font-weight:700;">~8,100</td>
+        <td style="padding:12px;text-align:center;font-size:12px;color:var(--muted);">Likely Degreed + internal Vault learning platform. Strong learning culture driven by internal wiki and AI tools.</td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-full">✓</span></td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:12px 16px;"><div style="font-size:13px;font-weight:700;color:var(--text);">TradeIndia</div><div style="font-size:11px;color:var(--muted);">India · Noida · Infocom Network</div></td>
+        <td style="padding:12px;text-align:center;"><span style="font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(255,101,132,0.1);color:#ff6584;border:1px solid rgba(255,101,132,0.2);">Direct 🇮🇳</span></td>
+        <td style="padding:12px;text-align:center;font-size:13px;color:var(--text);font-weight:700;">~3,700</td>
+        <td style="padding:12px;text-align:center;font-size:12px;color:var(--muted);">Limited public info. Likely basic LMS or homegrown tools. Traditional sales training.</td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-none">✗</span></td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.01);">
+        <td style="padding:12px 16px;"><div style="font-size:13px;font-weight:700;color:var(--text);">Meesho</div><div style="font-size:11px;color:var(--muted);">India · Bengaluru · IPO Dec 2025</div></td>
+        <td style="padding:12px;text-align:center;"><span style="font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(247,151,30,0.1);color:var(--partial);border:1px solid rgba(247,151,30,0.2);">Indirect 🇮🇳</span></td>
+        <td style="padding:12px;text-align:center;font-size:13px;color:var(--text);font-weight:700;">~1,600</td>
+        <td style="padding:12px;text-align:center;font-size:12px;color:var(--muted);">Azure OpenAI (Microsoft partnership) for customer-facing AI. Internal L&D likely Workday or similar HCM.</td>
+        <td style="padding:12px;text-align:center;"><span class="badge b-full">✓</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <!-- DETAILED CARDS -->
+  <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:20px;color:var(--text)">📋 Detailed Competitor Intelligence</div>
+
+  <!-- JUSTDIAL -->
+  <div class="exp-card" style="border-top:3px solid #ff6584;margin-bottom:20px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;flex-wrap:wrap;gap:12px;">
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--text)">🇮🇳 Justdial (JD Mart) — Direct Competitor</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px;">~14,500 employees · India's largest local search + B2B marketplace · Acquired by Reliance Retail 2025</div>
+      </div>
+      <span style="font-size:11px;padding:4px 12px;border-radius:10px;background:rgba(255,101,132,0.1);color:#ff6584;border:1px solid rgba(255,101,132,0.2);">PRIORITY COMPETITOR</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:16px;">
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--accent1);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">What Justdial Does</div>
+        <p style="font-size:12px;color:var(--muted);line-height:1.8;">Local business discovery platform now expanding into B2B marketplace (JD Mart — direct IndiaMART competitor). Connects consumers with local services and businesses. Operates across web, mobile, and telephony. Revenue ₹1,530 Cr (FY2025), 61% profit growth. Reliance Retail acquisition in 2025 gave it massive distribution muscle.</p>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--accent1);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Employee Roles &amp; What They Do</div>
+        <ul style="list-style:none;font-size:12px;color:var(--muted);line-height:2;">
+          <li>📞 <strong style="color:var(--text)">Tele-sales agents</strong> — ~60% of workforce; sell premium listings to SMEs</li>
+          <li>💻 <strong style="color:var(--text)">Tech engineers</strong> — ~15%; build the platform and AI features</li>
+          <li>🔍 <strong style="color:var(--text)">Data verifiers</strong> — ~10%; ensure listing accuracy and quality</li>
+          <li>📊 <strong style="color:var(--text)">Analytics &amp; product</strong> — ~8%; optimize search and conversion</li>
+          <li>🏢 <strong style="color:var(--text)">Support &amp; operations</strong> — ~7%</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--accent1);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">LMS &amp; AI Integration</div>
+        <p style="font-size:12px;color:var(--muted);line-height:1.8;">Under Reliance umbrella, likely migrating to SAP SuccessFactors or Oracle HCM Learning. Pre-acquisition: basic homegrown sales training tools. JD's AI: voice recognition for telephony, AI-driven listing recommendations, NLP for query parsing. Post-Reliance: Jio's AI infrastructure may power future L&D tools (Jio AI Cloud).</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div style="background:rgba(67,233,123,0.06);border:1px solid rgba(67,233,123,0.15);border-radius:10px;padding:14px;">
+        <div style="font-size:11px;font-weight:700;color:var(--full);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">✅ Positive Indicators</div>
+        <ul style="list-style:none;font-size:12px;color:var(--muted);line-height:1.9;">
+          <li>✓ Strong brand recognition reduces sales training time (customers already know JD)</li>
+          <li>✓ Reliance backing provides massive data infrastructure for AI-powered training analytics</li>
+          <li>✓ 61% profit growth shows financial health to invest in L&D technology</li>
+          <li>✓ Large tele-sales workforce creates demand for scalable AI-driven training</li>
+        </ul>
+      </div>
+      <div style="background:rgba(255,83,112,0.06);border:1px solid rgba(255,83,112,0.15);border-radius:10px;padding:14px;">
+        <div style="font-size:11px;font-weight:700;color:var(--none);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">⚠️ Challenges &amp; Weaknesses</div>
+        <ul style="list-style:none;font-size:12px;color:var(--muted);line-height:1.9;">
+          <li>✗ No visible investment in modern AI-native LMS — still using legacy approaches</li>
+          <li>✗ Post-acquisition identity confusion may slow L&D investment decisions</li>
+          <li>✗ High tele-sales churn typical in this model → training ROI hard to capture</li>
+          <li>✗ B2B marketplace (JD Mart) is new — sales force retraining from local search to B2B is a massive challenge without proper LMS</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHOPIFY -->
+  <div class="exp-card" style="border-top:3px solid #43e97b;margin-bottom:20px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;flex-wrap:wrap;gap:12px;">
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--text)">Shopify — Indirect Competitor</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px;">~8,100 employees · Canada (Global) · $8.8B revenue 2024 · B2B and merchant commerce overlap with IndiaMART</div>
+      </div>
+      <span style="font-size:11px;padding:4px 12px;border-radius:10px;background:rgba(67,233,123,0.1);color:var(--full);border:1px solid rgba(67,233,123,0.2);">INDIRECT COMPETITOR</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:16px;">
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--accent1);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">What Shopify Does</div>
+        <p style="font-size:12px;color:var(--muted);line-height:1.8;">Global e-commerce platform powering 5–6 million stores in 175 countries. Shopify B2B and Shopify Plus enable wholesale and large merchant operations — overlapping with IndiaMART's supplier-buyer connection model. India represents a growing market where SME sellers might choose Shopify over marketplace discovery platforms.</p>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--accent1);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Employee Roles &amp; AI Usage</div>
+        <ul style="list-style:none;font-size:12px;color:var(--muted);line-height:2;">
+          <li>💻 <strong style="color:var(--text)">Engineers (~50%)</strong> — build AI features (Shopify Magic, Sidekick); GitHub Copilot mandatory</li>
+          <li>🎯 <strong style="color:var(--text)">Merchant Success (~20%)</strong> — help merchants scale using AI analytics tools</li>
+          <li>📊 <strong style="color:var(--text)">Data Science (~10%)</strong> — fraud detection, recommendation AI, demand forecasting</li>
+          <li>🤝 <strong style="color:var(--text)">Sales/BD (~10%)</strong> — enterprise and Plus tier acquisition</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--accent1);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">LMS &amp; L&D Approach</div>
+        <p style="font-size:12px;color:var(--muted);line-height:1.8;">Shopify uses a strong internal learning culture — Shopify Vault (internal wiki), Slack-embedded learning, and likely a sophisticated LXP. All engineering roles use <strong style="color:var(--text)">GitHub Copilot + internal AI tools</strong> as part of daily workflow. "GSD Fridays" (Get Sh*t Done) allow autonomous learning time. AI is a <strong style="color:var(--text)">primary productivity tool</strong>, not just background.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div style="background:rgba(67,233,123,0.06);border:1px solid rgba(67,233,123,0.15);border-radius:10px;padding:14px;">
+        <div style="font-size:11px;font-weight:700;color:var(--full);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">✅ What's Working Well</div>
+        <ul style="list-style:none;font-size:12px;color:var(--muted);line-height:1.9;">
+          <li>✓ "Chaos Monkey" AI testing culture — engineers learn by breaking things safely</li>
+          <li>✓ AI-mandatory coding workflows increase engineering velocity dramatically</li>
+          <li>✓ Strong async, documentation-first culture means knowledge is always accessible</li>
+          <li>✓ Shopify Sidekick (AI commerce assistant) became a major merchant productivity tool</li>
+          <li>✓ 26% YoY revenue growth shows AI productivity investment pays off</li>
+        </ul>
+      </div>
+      <div style="background:rgba(255,83,112,0.06);border:1px solid rgba(255,83,112,0.15);border-radius:10px;padding:14px;">
+        <div style="font-size:11px;font-weight:700;color:var(--none);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">⚠️ Challenges &amp; Negatives</div>
+        <ul style="list-style:none;font-size:12px;color:var(--muted);line-height:1.9;">
+          <li>✗ High-pressure AI-first culture led to 20% workforce layoffs in 2023</li>
+          <li>✗ "Prove the bot can't do it before hiring" policy creates anxiety for existing employees</li>
+          <li>✗ Extreme async culture means new employees often feel isolated without structured onboarding LMS</li>
+          <li>✗ India-specific L&D not prioritized — most learning content is North America-centric</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEESHO -->
+  <div class="exp-card" style="border-top:3px solid #6c63ff;margin-bottom:20px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;flex-wrap:wrap;gap:12px;">
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--text)">🇮🇳 Meesho — Indirect Competitor</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px;">~1,600 employees · Bengaluru · IPO Dec 2025 · India's largest social commerce platform</div>
+      </div>
+      <span style="font-size:11px;padding:4px 12px;border-radius:10px;background:rgba(108,99,255,0.1);color:var(--accent1);border:1px solid rgba(108,99,255,0.2);">INDIRECT COMPETITOR 🇮🇳</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:16px;">
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--accent1);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">What Meesho Does</div>
+        <p style="font-size:12px;color:var(--muted);line-height:1.8;">India's largest social commerce marketplace enabling 400K+ sellers to sell through WhatsApp and social media. 187M customers as of Dec 2024, 80% from Tier 2/3 cities. Zero-commission model disrupts traditional B2B/D2C. Overlaps with IndiaMART in SME-seller connectivity. IPO in Dec 2025 raised $603M.</p>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--accent1);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Employee Roles &amp; AI Usage</div>
+        <ul style="list-style:none;font-size:12px;color:var(--muted);line-height:2;">
+          <li>🤖 <strong style="color:var(--text)">AI/ML Engineers (~30%)</strong> — build GenAI product features, demand forecasting, fraud detection</li>
+          <li>📦 <strong style="color:var(--text)">Logistics/Ops (~25%)</strong> — manage Valmo (logistics arm) partner network</li>
+          <li>🎯 <strong style="color:var(--text)">Product/Design (~20%)</strong> — optimize seller and buyer experience</li>
+          <li>📊 <strong style="color:var(--text)">Data Analytics (~15%)</strong> — build recommendation and pricing AI</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--accent1);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">AI Integration (Best-in-Class in India)</div>
+        <p style="font-size:12px;color:var(--muted);line-height:1.8;">Meesho deployed <strong style="color:var(--text)">Azure OpenAI (Microsoft partnership)</strong> for a GenAI voice bot handling 60,000 calls/day in Hindi + English. 2024: 22M suspicious transactions blocked by AI fraud detection. AI powers product recommendations, review summarization, and seller assistance. AI is a <strong style="color:var(--text)">primary revenue driver</strong>, not just a tool.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div style="background:rgba(67,233,123,0.06);border:1px solid rgba(67,233,123,0.15);border-radius:10px;padding:14px;">
+        <div style="font-size:11px;font-weight:700;color:var(--full);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">✅ AI & L&D Wins</div>
+        <ul style="list-style:none;font-size:12px;color:var(--muted);line-height:1.9;">
+          <li>✓ Voice AI bot resolves majority of customer queries without human intervention</li>
+          <li>✓ Hindi-first AI design — sets the bar for vernacular AI in India</li>
+          <li>✓ AI-powered fraud prevention saved significant costs (22M blocked transactions)</li>
+          <li>✓ Strong engineering culture with clear AI-first mandate attracts top talent</li>
+          <li>✓ Lean team (1,600 people handling 187M customers) = AI as force multiplier</li>
+        </ul>
+      </div>
+      <div style="background:rgba(255,83,112,0.06);border:1px solid rgba(255,83,112,0.15);border-radius:10px;padding:14px;">
+        <div style="font-size:11px;font-weight:700;color:var(--none);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">⚠️ L&D Gaps &amp; Challenges</div>
+        <ul style="list-style:none;font-size:12px;color:var(--muted);line-height:1.9;">
+          <li>✗ Logistics partner (Valmo) workforce training — thousands of delivery partners with no formal LMS</li>
+          <li>✗ Rapid IPO growth will require urgent onboarding infrastructure at scale</li>
+          <li>✗ No public evidence of a dedicated enterprise LMS — internal learning is informal</li>
+          <li>✗ Extreme lean team model means burnout risk; L&D for mental health and sustainability is a gap</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRADEINDIA -->
+  <div class="exp-card" style="border-top:3px solid #f7971e;margin-bottom:24px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;flex-wrap:wrap;gap:12px;">
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--text)">🇮🇳 TradeIndia — Direct Competitor</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px;">~3,700 employees · Noida · India's second largest B2B marketplace · founded 1996</div>
+      </div>
+      <span style="font-size:11px;padding:4px 12px;border-radius:10px;background:rgba(247,151,30,0.1);color:var(--partial);border:1px solid rgba(247,151,30,0.2);">DIRECT COMPETITOR 🇮🇳</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:16px;">
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--accent1);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">What TradeIndia Does</div>
+        <p style="font-size:12px;color:var(--muted);line-height:1.8;">India's oldest B2B marketplace (since 1996) connecting manufacturers, suppliers, exporters with domestic and international buyers. Operates similarly to IndiaMART with premium listings, digital catalogs, and lead generation for SME sellers. Strong presence in sectors like chemicals, textiles, machinery, and agricultural products.</p>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--accent1);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Employee Roles</div>
+        <ul style="list-style:none;font-size:12px;color:var(--muted);line-height:2;">
+          <li>📞 <strong style="color:var(--text)">Field Sales (~55%)</strong> — onboard suppliers, sell premium listings</li>
+          <li>💻 <strong style="color:var(--text)">Product/Tech (~20%)</strong> — platform development and SEO optimization</li>
+          <li>🎯 <strong style="color:var(--text)">Operations (~15%)</strong> — catalog quality, buyer-seller support</li>
+          <li>📋 <strong style="color:var(--text)">Admin/Finance (~10%)</strong> — collections, billing, compliance</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--accent1);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">LMS &amp; AI Reality</div>
+        <p style="font-size:12px;color:var(--muted);line-height:1.8;">Very limited public disclosure. Likely uses basic in-house training modules or a simple LMS like TalentLMS/Moodle. AI adoption appears minimal — platform interface and technology visibly lags behind IndiaMART. <strong style="color:var(--text)">No GenAI features visible in product or jobs postings.</strong> This is a significant competitive vulnerability as AI-driven lead matching becomes the standard.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div style="background:rgba(67,233,123,0.06);border:1px solid rgba(67,233,123,0.15);border-radius:10px;padding:14px;">
+        <div style="font-size:11px;font-weight:700;color:var(--full);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">✅ Positives</div>
+        <ul style="list-style:none;font-size:12px;color:var(--muted);line-height:1.9;">
+          <li>✓ Lean operations mean lower training overhead vs IndiaMART's scale</li>
+          <li>✓ Long tenure of field sales force provides institutional knowledge</li>
+          <li>✓ Smaller size means faster potential AI adoption decisions</li>
+        </ul>
+      </div>
+      <div style="background:rgba(255,83,112,0.06);border:1px solid rgba(255,83,112,0.15);border-radius:10px;padding:14px;">
+        <div style="font-size:11px;font-weight:700;color:var(--none);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">⚠️ Significant Gaps</div>
+        <ul style="list-style:none;font-size:12px;color:var(--muted);line-height:1.9;">
+          <li>✗ No discernible AI strategy in product or L&D — at risk of falling further behind</li>
+          <li>✗ High sales churn (industry-standard for B2B marketplace field sales) without proper onboarding LMS</li>
+          <li>✗ No offline training capability for Tier 3 field teams</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- INDIAMART IMPLICATION BOX -->
+  <div style="background:linear-gradient(135deg,rgba(108,99,255,0.08),rgba(67,233,123,0.05));border:1px solid rgba(108,99,255,0.3);border-radius:14px;padding:24px;">
+    <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--accent1);margin-bottom:14px;">🎯 What This Means for IndiaMART's L&D Strategy</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;">
+      <div style="font-size:12px;color:var(--muted);line-height:1.8;border-left:3px solid var(--accent1);padding-left:12px;">
+        <strong style="color:var(--text);">Justdial/Reliance:</strong> Post-acquisition training chaos = IndiaMART's window to build a more skilled, AI-ready sales force while competitor is distracted. Prioritize training velocity and product knowledge depth.
+      </div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.8;border-left:3px solid var(--full);padding-left:12px;">
+        <strong style="color:var(--text);">Shopify:</strong> Not a direct threat but sets the bar for AI-led work culture. IndiaMART should benchmark Shopify's "AI-first engineering" onboarding model for its tech teams.
+      </div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.8;border-left:3px solid #ff6584;padding-left:12px;">
+        <strong style="color:var(--text);">Meesho:</strong> Proves that a lean team with strong AI tooling can outscale. IndiaMART's 5,000+ person org should use AI-powered LMS to achieve Meesho-level productivity per employee.
+      </div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.8;border-left:3px solid var(--partial);padding-left:12px;">
+        <strong style="color:var(--text);">TradeIndia:</strong> No AI L&D investment = lagging product quality and lower sales force effectiveness. IndiaMART's LMS investment is a <strong style="color:var(--text)">direct competitive moat</strong> against TradeIndia's workforce capability.
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /content -->
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const tabs = document.querySelectorAll('.nav-tab');
+  const map = { checklist: 0, explanations: 1, journeys: 2, verdict: 3, 'ai-native': 4, 'cypher-disprz': 5, competitors: 6 };
+  if (map[id] !== undefined) tabs[map[id]].classList.add('active');
+}
+</script>
+</body>
+</html>
